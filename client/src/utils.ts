@@ -14,34 +14,3 @@ function string2html(string): HTMLElement {
     return div.children[0] as HTMLElement;
 }
 
-function getFunctionDefinitions(){
-    var steps: any = [
-        {
-            type: 'click',
-            description: 'user clicks on element',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }]
-        }, {
-            type: 'write',
-            description: 'user writes text',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }, {
-                type: 'text',
-                name: 'text to write'
-            }]
-        },{
-            type:'switchtab',
-            description:'user goes to tab',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }]
-        }
-    ]
-    return steps
-}
-

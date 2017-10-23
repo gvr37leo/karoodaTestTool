@@ -5,17 +5,24 @@ using System.Web;
 
 namespace karoodaTestToolServer.Models {
     public class FunctionDefinition {
-        string _id;
-        string name;
-        string description;
-        List<Parameter> parameters = new List<Parameter>();
+        public string name;
+        public string description;
+        public List<FuncParameter> parameters;
+
+        public FunctionDefinition(string name, string description, List<FuncParameter> parameters) {
+            this.name = name;
+            this.description = description;
+            this.parameters = parameters;
+        }
     }
 
-    public class Parameter {
-        ParamType type;
-        string pointerType;
+    public class FuncParameter {
+        public ParamType type;
+        public string name;
+        public string pointerType;
 
-        Parameter() {
+
+        public FuncParameter(string name, ParamType type) {
 
         }
     }

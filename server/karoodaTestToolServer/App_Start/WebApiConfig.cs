@@ -14,12 +14,12 @@ namespace karoodaTestToolServer
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings
-            .Add(new System.Net.Http.Formatting.RequestHeaderMapping("Accept",
-                                          "text/html",
-                                          StringComparison.InvariantCultureIgnoreCase,
-                                          true,
-                                          "application/json"));
+            //GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings
+            //.Add(new System.Net.Http.Formatting.RequestHeaderMapping("Accept",
+            //                              "text/html",
+            //                              StringComparison.InvariantCultureIgnoreCase,
+            //                              true,
+            //                              "application/json"));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
