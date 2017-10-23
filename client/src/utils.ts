@@ -13,3 +13,36 @@ function string2html(string): HTMLElement {
     div.innerHTML = string;
     return div.children[0] as HTMLElement;
 }
+
+function getPossibleSteps(){
+    var steps: any = [
+        {
+            type: 'click',
+            description: 'user clicks on element',
+            attributes: [{
+                type: 'text',
+                name: 'id'
+            }]
+        }, {
+            type: 'write',
+            description: 'user writes text',
+            attributes: [{
+                type: 'text',
+                name: 'id'
+            }, {
+                type: 'text',
+                name: 'text to write'
+            }]
+        },{
+            type:'switchtab',
+            description:'user goes to tab',
+            attributes: [{
+                type: 'text',
+                name: 'id'
+            }]
+        }
+    ]
+
+
+    return steps
+}
