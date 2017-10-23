@@ -9,5 +9,13 @@ namespace karoodaTestToolServer.Controllers
 {
     public class DefaultController : ApiController
     {
+
+        [HttpGet]
+        public IHttpActionResult test() {
+
+            return Ok(new {
+                name = "hello"
+            });
+        }
     }
 }

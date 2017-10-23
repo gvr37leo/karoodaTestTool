@@ -14,19 +14,19 @@ function string2html(string): HTMLElement {
     return div.children[0] as HTMLElement;
 }
 
-function getPossibleSteps(){
+function getFunctionDefinitions(){
     var steps: any = [
         {
             type: 'click',
             description: 'user clicks on element',
-            attributes: [{
+            parameters: [{
                 type: 'text',
                 name: 'id'
             }]
         }, {
             type: 'write',
             description: 'user writes text',
-            attributes: [{
+            parameters: [{
                 type: 'text',
                 name: 'id'
             }, {
@@ -36,13 +36,12 @@ function getPossibleSteps(){
         },{
             type:'switchtab',
             description:'user goes to tab',
-            attributes: [{
+            parameters: [{
                 type: 'text',
                 name: 'id'
             }]
         }
     ]
-
-
     return steps
 }
+
