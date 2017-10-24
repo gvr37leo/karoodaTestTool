@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace karoodaTestToolServer.Models {
+
     public class FunctionDefinition {
         public string name;
         public string description;
@@ -23,7 +24,8 @@ namespace karoodaTestToolServer.Models {
 
 
         public FuncParameter(string name, ParamType type) {
-
+            this.name = name;
+            this.type = type;
         }
     }
 

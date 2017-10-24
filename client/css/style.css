@@ -1,0 +1,27 @@
+#buttonrow{
+    margin-bottom: 10px;
+}
+
+#attributerow{
+    margin-bottom: 10px;
+}
+
+#parameters{
+    margin-right: 10px;
+}
+
+#buttonrow > *{
+    margin-right: 10px;
+}
+
+#stepbuttons > *{
+    margin-right: 10px;
+}
+
+#stepscontainer > *{
+    margin-bottom: 10px;
+}
+
+input{
+    max-width: 196px;
+}

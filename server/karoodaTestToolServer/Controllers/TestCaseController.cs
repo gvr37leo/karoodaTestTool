@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace karoodaTestToolServer.Controllers
 {
-    public class TestCaseController : ApiController
-    {
+    public class TestCaseController : ApiController{
+
     }
 }

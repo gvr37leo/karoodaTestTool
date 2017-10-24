@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace karoodaTestToolServer.Controllers
 {
-    public class StepController : ApiController
-    {
+    public class StepController : ApiController{
+
     }
 }

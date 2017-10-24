@@ -1,35 +1,14 @@
 /// <reference path="models/step.ts" />
 
 
-function getFunctionDefinitions() {
-    var steps: any = [
-        {
-            type: 'click',
-            description: 'user clicks on element',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }]
-        }, {
-            type: 'write',
-            description: 'user writes text',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }, {
-                type: 'text',
-                name: 'text to write'
-            }]
-        }, {
-            type: 'switchtab',
-            description: 'user goes to tab',
-            parameters: [{
-                type: 'text',
-                name: 'id'
-            }]
-        }
-    ]
-    return steps
+function getFunctionDefinitions(callback: (data) => void) {
+    fetch('http://localhost:56232/api/function',{
+        method:"GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback(res)
+    })
 }
 
 function getSteps(callback:(data:Step[]) => void) {

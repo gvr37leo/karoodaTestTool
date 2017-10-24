@@ -5,9 +5,12 @@
 /// <reference path="../utils.ts" />
 /// <reference path="../button.ts" />
 /// <reference path="../widgets/textWidget.ts" />
+/// <reference path="../widgets/dropdownWidget.ts" />
+/// <reference path="../models/functionDefinition.ts" />
 
 
 class TestcaseView {
+    newsteprow: HTMLElement;
     stepstable: HTMLElement;
     attributerow: HTMLElement;
     buttonrow: HTMLElement;
@@ -19,6 +22,7 @@ class TestcaseView {
             <div id="buttonrow"></div>
             <div id="attributerow"></div>
             <div id="stepstable"></div>
+            <div id="newsteprow"></div>
         </div>
     `
     element: HTMLElement
@@ -29,7 +33,8 @@ class TestcaseView {
         this.buttonrow = this.element.querySelector('#buttonrow') as HTMLElement
         this.attributerow = this.element.querySelector('#attributerow') as HTMLElement
         this.stepstable = this.element.querySelector('#stepstable') as HTMLElement
-
+        this.newsteprow = this.element.querySelector('#newsteprow') as HTMLElement
+        
         //up,save
         new Button(this.buttonrow, 'up', 'btn btn-default', () => {
 
@@ -44,5 +49,12 @@ class TestcaseView {
         var steps = getSteps((steps) => {
             new GridControl(this.stepstable, steps)
         })
+
+        getFunctionDefinitions((res) => {
+            new DropDownWidget<FunctionDefinition>(this.newsteprow, 'a', (val) => {
+                return val.description
+            }, res)
+        })
+        
     }
 }

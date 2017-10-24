@@ -8,7 +8,7 @@ class StepView{
         <div style="display:flex;">
             <div id="description"></div>
             <div id="parameters"></div>
-            <div id="buttons"></div>
+            <div id="stepbuttons"></div>
         </div>
     `
     constructor(element:HTMLElement, step:Step){
@@ -17,7 +17,7 @@ class StepView{
 
         this.description = this.element.querySelector('#description') as HTMLElement
         this.parameters = this.element.querySelector('#parameters') as HTMLElement
-        this.buttonContainer = this.element.querySelector('#buttons') as HTMLElement
+        this.buttonContainer = this.element.querySelector('#stepbuttons') as HTMLElement
 
         for(var parameter of this.step.parameters){//should probably do request to functiondefintition
             new TextWidget(this.parameters)
