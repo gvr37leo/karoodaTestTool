@@ -51,9 +51,15 @@ class TestcaseView {
         })
 
         getFunctionDefinitions((res) => {
-            new DropDownWidget<FunctionDefinition>(this.newsteprow, 'a', (val) => {
+            var dropdownWidget = new DropDownWidget<FunctionDefinition>(this.newsteprow, 'a', (val) => {
                 return val.description
             }, res)
+
+            dropdownWidget.input.addEventListener('keypress',(e) => {
+                if(e.keyCode == 13){//enter
+                    
+                }
+            })
         })
         
     }

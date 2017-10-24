@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace karoodaTestToolServer.Models {
+﻿namespace karoodaTestToolServer.Models {
     public class Step {
+
+        public int id { get; set; }
+
+        public string functionPointer { get; set; }
+
+        public int belongsToTestcase { get; set; }
     }
 }

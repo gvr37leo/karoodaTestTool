@@ -5,6 +5,7 @@ using System.Web;
 
 namespace karoodaTestToolServer.Models {
     public class TestCase {
+        int id;
         string name;
     }
 }

@@ -1,4 +1,6 @@
 class StepView{
+    downrequest: EventSystem<number>;
+    uprequest: EventSystem<number>;
     buttonContainer: HTMLElement;
     parameters: HTMLElement;
     description: HTMLElement;
@@ -23,8 +25,11 @@ class StepView{
             new TextWidget(this.parameters)
         }
 
-        new Button(this.buttonContainer, 'up','btn btn-default',() => {
+        this.uprequest = new EventSystem();
+        this.downrequest = new EventSystem();
 
+        new Button(this.buttonContainer, 'up','btn btn-default',() => {
+            this.uprequest.trigger(0)
         })
 
         new Button(this.buttonContainer, 'down', 'btn btn-default', () => {

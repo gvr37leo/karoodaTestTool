@@ -6,6 +6,7 @@ class DropDownWidget<T> extends Widget<T>{
     input: HTMLInputElement;
     displayer: (val: T) => string;
     dropper: HTMLElement;
+    filter:string = ''
     template: string = `
         <div id="container" style="position:relative; display:inline-block;"> 
             <input class="form-control" id="input" type="text"> 
@@ -33,16 +34,12 @@ class DropDownWidget<T> extends Widget<T>{
         this.optionlist = optionlist;
         this.displayer = displayer
 
+        this.updateList()
 
-
-        for (let option of this.optionlist) {
-            var drop = createAndAppend(this.dropper, this.dropTemplate)
-            drop.innerHTML = this.displayer(option)
-
-            drop.addEventListener('click', () => {
-                that.value.set(option)
-            })
-        }
+        this.input.addEventListener('input',() => {
+            this.filter = this.input.value
+            this.updateList()
+        })
 
         this.input.addEventListener('focus', () => {
             that.dropper.style.display = 'block'
@@ -57,6 +54,23 @@ class DropDownWidget<T> extends Widget<T>{
         this.value.onClear.listen(() => {
             this.input.value = ''
         })
+    }
+
+    updateList(){
+        var that = this;
+        this.dropper.innerHTML = ''
+        var regex = new RegExp(`.*${this.filter}.*`);
+        
+        for (let option of this.optionlist) {
+            var textToDisplay = this.displayer(option)
+            if(regex.test(textToDisplay)){
+                var drop = createAndAppend(this.dropper, this.dropTemplate)
+                drop.innerHTML = textToDisplay
+                drop.addEventListener('click', () => {
+                    that.value.set(option)
+                })
+            }
+        }
     }
 
     protected handleSetReadOnly(val: boolean) {
