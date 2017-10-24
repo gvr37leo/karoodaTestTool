@@ -22,9 +22,9 @@ testcases
 steps
 {
     id
-    name
     functionPointer//points to hardcoded function with a descriptive name string
     belongsToTestCase
+    order
 }
 
 parameters
