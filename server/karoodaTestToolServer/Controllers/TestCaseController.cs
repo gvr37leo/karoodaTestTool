@@ -14,6 +14,11 @@ namespace karoodaTestToolServer.Controllers
             _sqlUtils = new MsSqlUtils(ConfigurationManager.ConnectionStrings["SQLCon"].ConnectionString);
         }
 
+        [HttpPost]
+        public IHttpActionResult Execute() {
+            return Ok();
+        }
+
         [HttpGet]
         public IHttpActionResult Get() {
             var allTestCases = _sqlUtils.Query<TestCase>("SELECT * FROM Testcases");

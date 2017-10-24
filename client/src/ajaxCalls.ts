@@ -12,30 +12,43 @@ function getFunctionDefinitions(callback: (data) => void) {
 }
 
 function getSteps(callback:(data:Step[]) => void) {
-    var steps = [{
-        parameters:[{
-            type:'text'
-        }],
-        functionPointer:'1078934h5gkg52l5'
-    },{
-        parameters: [{
-            type: 'text'
-        }],
-        functionPointer: '1078934h5gkg52l5'
-    }]
-    callback(steps)
+    fetch('http://localhost:56232/api/Step', {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback(res)
+    })
 }
 
-function saveStep(_id: string, step: Step) {
-
+function saveStep(step: Step, callback: () => void) {
+    fetch('http://localhost:56232/api/Step', {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback()
+    })
 }
 
-function postStep(step: Step) {
-
+function postStep(step: Step, callback: () => void) {
+    fetch('http://localhost:56232/api/Step', {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback()
+    })
 }
 
-function deleteStep(_id: string) {
-
+function deleteStep(_id: string, callback: () => void) {
+    fetch('http://localhost:56232/api/Step', {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback()
+    })
 }
 
 
