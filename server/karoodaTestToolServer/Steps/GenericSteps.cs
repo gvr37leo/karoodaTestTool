@@ -1,4 +1,5 @@
-﻿using karoodaTestToolServer.Models;
+﻿using karoodaTestToolServer.Controllers;
+using karoodaTestToolServer.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
@@ -11,44 +12,44 @@ namespace karoodaTestToolServer.Steps {
     public class GenericSteps {
         IWebDriver driver;
 
-        GenericSteps(IWebDriver driver) {
+        public GenericSteps(IWebDriver driver) {
             this.driver = driver;
         }
 
-        public void Call(FunctionDefinition func) {
+        public void Call(Step step) {
 
-            Dictionary<string, FuncParameter> paramDict = func.parameters.ToDictionary((param) => param.name);
+            //step.
 
-            switch (func.name) {
-                case "click": {
-                        Click(paramDict["selector"].value);
-                        break;
-                    }
-                case "write": {
-                        Write(paramDict["selector"].value, paramDict["text"].value);
-                        break;
-                    }
-                case "refresh": {
-                        Refresh();
-                        break;
-                    }
-                case "gotourl": {
-                        GoToURL(paramDict["url"].value);
-                        break;
-                    }
-                case "assert": {
-                        Assert();
-                        break;
-                    }
-                case "screenshot": {
-                        Screenshot();
-                        break;
-                    }
-                case "scroll": {
-                        Scroll(paramDict["selector"].value);
-                        break;
-                    }
-            }
+            //switch (step.functionPointer) {
+            //    case "click": {
+            //            Click(paramDict["selector"].value);
+            //            break;
+            //        }
+            //    case "write": {
+            //            Write(paramDict["selector"].value, paramDict["text"].value);
+            //            break;
+            //        }
+            //    case "refresh": {
+            //            Refresh();
+            //            break;
+            //        }
+            //    case "gotourl": {
+            //            GoToURL(paramDict["url"].value);
+            //            break;
+            //        }
+            //    case "assert": {
+            //            Assert();
+            //            break;
+            //        }
+            //    case "screenshot": {
+            //            Screenshot();
+            //            break;
+            //        }
+            //    case "scroll": {
+            //            Scroll(paramDict["selector"].value);
+            //            break;
+            //        }
+            //}
 
 
 

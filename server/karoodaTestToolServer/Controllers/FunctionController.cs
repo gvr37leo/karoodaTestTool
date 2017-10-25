@@ -11,52 +11,52 @@ namespace karoodaTestToolServer.Controllers{
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FunctionController : ApiController{
-        Dictionary<string, FunctionDefinition> functionMap = new Dictionary<string, FunctionDefinition>();
+        Dictionary<string, FunctionDef> functionMap = new Dictionary<string, FunctionDef>();
 
         public FunctionController() {
 
-            AddToDictionary("click", "click on element",new List<FuncParameter> {
-                new FuncParameter("selector",ParamType.text)
+            AddToDictionary("click", "click on element",new List<ParameterDef> {
+                new ParameterDef("selector",ParamType.text)
             });
 
-            AddToDictionary("write", "write in input element", new List<FuncParameter> {
-                new FuncParameter("selector",ParamType.text),
-                new FuncParameter("text",ParamType.text)
+            AddToDictionary("write", "write in input element", new List<ParameterDef> {
+                new ParameterDef("selector",ParamType.text),
+                new ParameterDef("text",ParamType.text)
             });
 
-            AddToDictionary("refresh", "refresh the page", new List<FuncParameter> {
+            AddToDictionary("refresh", "refresh the page", new List<ParameterDef> {
             });
 
-            AddToDictionary("gotourl", "go to url", new List<FuncParameter> {
-                new FuncParameter("url",ParamType.text)
+            AddToDictionary("gotourl", "go to url", new List<ParameterDef> {
+                new ParameterDef("url",ParamType.text)
             });
 
-            AddToDictionary("assert", "check if input contains value", new List<FuncParameter> {
+            AddToDictionary("assert", "check if input contains value", new List<ParameterDef> {
             });
 
-            AddToDictionary("screenshot", "take a screenshot", new List<FuncParameter> {
+            AddToDictionary("screenshot", "take a screenshot", new List<ParameterDef> {
             });
 
-            AddToDictionary("scroll", "scroll to element", new List<FuncParameter> {
-                new FuncParameter("selector",ParamType.text)
+            AddToDictionary("scroll", "scroll to element", new List<ParameterDef> {
+                new ParameterDef("selector",ParamType.text)
             });
-
-            //AddToDictionary("click", "user clicks on element", new List<FuncParameter> {
-            //    new FuncParameter(ParamType.text)
-            //});
         }
 
-        private void AddToDictionary(string key, string description, List<FuncParameter> parameters) {
-            functionMap.Add(key, new FunctionDefinition(key, description, parameters));
+        private void AddToDictionary(string key, string description, List<ParameterDef> parameters) {
+            functionMap.Add(key, new FunctionDef(key, description, parameters));
         }
 
         public IHttpActionResult Get() {
-            List<FunctionDefinition> funcs = functionMap.Select((pair) => pair.Value).ToList();
+            List<FunctionDef> funcs = functionMap.Select((pair) => pair.Value).ToList();
             return Ok(funcs);
         }
 
+        public FunctionDef GetFunc(string funcname) {
+            return functionMap[funcname];
+        }
+
         public IHttpActionResult Get(string funcname) {
-            FunctionDefinition result = functionMap[funcname];
+            FunctionDef result = functionMap[funcname];
 
             if (result != null) {
                 return Ok(result);

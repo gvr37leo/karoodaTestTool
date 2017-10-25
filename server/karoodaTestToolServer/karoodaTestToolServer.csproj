@@ -142,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
+    <Compile Include="Controllers\ParameterController.cs" />
     <Compile Include="Controllers\StepController.cs" />
     <Compile Include="Controllers\TestCaseController.cs" />
     <Compile Include="Global.asax.cs">
@@ -172,6 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ModelLayer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

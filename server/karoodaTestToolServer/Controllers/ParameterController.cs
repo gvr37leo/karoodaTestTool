@@ -1,18 +1,16 @@
-﻿using GorillaIT.DbUtils;
-using GorillaIT.DbUtils.MsSqlUtils;
-using karoodaTestToolServer.Controllers;
+﻿using karoodaTestToolServer.Controllers;
 using karoodaTestToolServer.Models;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web.Http;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 
-namespace karoodaTestToolServer.Controllers {
-
-    public class StepDAL : AbstractDAL<Step> {
+namespace karoodaTestToolServer.Controllers{
+    public class ParameterDAL : AbstractDAL<ParameterDef> {
         public override string getTableName() {
-            return "Step";
+            return "Parameter";
         }
 
         public override string getPostString() {
@@ -24,9 +22,9 @@ namespace karoodaTestToolServer.Controllers {
         }
     }
 
-    public class StepController : AbstractController<Step> {
-        public override AbstractDAL<Step> DALGetter() {
-            return new StepDAL();
+    public class ParameterController : AbstractController<ParameterDef> {
+        public override AbstractDAL<ParameterDef> DALGetter() {
+            return new ParameterDAL();
         }
     }
 }

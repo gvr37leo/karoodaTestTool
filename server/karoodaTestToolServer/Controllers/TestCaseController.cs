@@ -1,59 +1,50 @@
 ﻿using GorillaIT.DbUtils;
 using GorillaIT.DbUtils.MsSqlUtils;
 using karoodaTestToolServer.Models;
+using karoodaTestToolServer.Steps;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Http;
 
 
 namespace karoodaTestToolServer.Controllers
 {
-    public class TestCaseController : ApiController{
-        private SqlUtils _sqlUtils;
 
-        public TestCaseController() {
-            _sqlUtils = new MsSqlUtils(ConfigurationManager.ConnectionStrings["SQLCon"].ConnectionString);
+    public class TestCaseDAL : AbstractDAL<TestCase> {
+        public override string getTableName() {
+            return "TestCase";
+        }
+
+        public override string getPostString() {
+            return $"INSERT INTO {getTableName()} (name) VALUES (@name)";
+        }
+
+        public override string getUpdateString() {
+            return $"UPDATE {getTableName()} SET name=@name WHERE id=@id";
+        }
+    }
+
+    public class TestCaseController : AbstractController<TestCase> {
+        public override AbstractDAL<TestCase> DALGetter() {
+            return new TestCaseDAL();
         }
 
         [HttpPost]
-        public IHttpActionResult Execute() {
+        public IHttpActionResult Execute(int id) {
+            IWebDriver driver = new ChromeDriver();
+            GenericSteps gensteps = new GenericSteps(driver);
+
+            //testCase.steps = new StepController()._GetStepsFromTestcase(id);
+
+            //foreach (Step step in testCase.steps) {
+            //    gensteps.Call(step);
+            //}
+
+            driver.Quit();
             return Ok();
-        }
-
-        [HttpGet]
-        public IHttpActionResult Get() {
-            var allTestCases = _sqlUtils.Query<TestCase>("SELECT * FROM Testcases");
-            return Ok(allTestCases);
-        }
-
-        [HttpGet]
-        public IHttpActionResult Get(int id) {
-            var testCase = _sqlUtils.SingleOrDefault<TestCase>("SELECT * FROM Testcases WHERE Id=@Id", new { Id = id });
-            return Ok(testCase);
-        }
-
-        [HttpPost]
-        public IHttpActionResult Post(TestCase testCase) {
-            return Ok();
-        }
-
-        [HttpPut]
-        public IHttpActionResult Put(TestCase testCase) {
-            var affectedRows = _sqlUtils.Execute("UPDATE Testcases SET functionPointer=@functionPointer, belongsToTestcase=@belongsToTestcase WHERE id=@id", testCase);
-            if (affectedRows == 1) {
-                return Ok();
-            } else {
-                return NotFound();
-            }
-        }
-
-        [HttpDelete]
-        public IHttpActionResult Delete(int id) {
-            var affectedRows = _sqlUtils.Execute("delete from Testcases WHERE id=@id", id);
-            if (affectedRows == 1) {
-                return Ok();
-            } else {
-                return NotFound();
-            }
         }
     }
 }
