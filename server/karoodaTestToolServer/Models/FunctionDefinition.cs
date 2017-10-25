@@ -6,6 +6,7 @@ using System.Web;
 namespace karoodaTestToolServer.Models {
 
     public class FunctionDefinition {
+        public int id;
         public string name;
         public string description;
         public List<FuncParameter> parameters;
@@ -18,9 +19,14 @@ namespace karoodaTestToolServer.Models {
     }
 
     public class FuncParameter {
+        public int id;
         public ParamType type;
         public string name;
+        public string value;
+        public int belongsToFunction;
+
         public string pointerType;
+
 
 
         public FuncParameter(string name, ParamType type) {

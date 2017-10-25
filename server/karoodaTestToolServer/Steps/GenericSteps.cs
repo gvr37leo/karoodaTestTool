@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using karoodaTestToolServer.Models;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System;
@@ -12,6 +13,45 @@ namespace karoodaTestToolServer.Steps {
 
         GenericSteps(IWebDriver driver) {
             this.driver = driver;
+        }
+
+        public void Call(FunctionDefinition func) {
+
+            Dictionary<string, FuncParameter> paramDict = func.parameters.ToDictionary((param) => param.name);
+
+            switch (func.name) {
+                case "click": {
+                        Click(paramDict["selector"].value);
+                        break;
+                    }
+                case "write": {
+                        Write(paramDict["selector"].value, paramDict["text"].value);
+                        break;
+                    }
+                case "refresh": {
+                        Refresh();
+                        break;
+                    }
+                case "gotourl": {
+                        GoToURL(paramDict["url"].value);
+                        break;
+                    }
+                case "assert": {
+                        Assert();
+                        break;
+                    }
+                case "screenshot": {
+                        Screenshot();
+                        break;
+                    }
+                case "scroll": {
+                        Scroll(paramDict["selector"].value);
+                        break;
+                    }
+            }
+
+
+
         }
 
         public void Click (string selector){
