@@ -13,12 +13,8 @@ namespace karoodaTestToolServer.Controllers{
             return "Parameter";
         }
 
-        public override string getPostString() {
-            return $"INSERT INTO {getTableName()} (name) VALUES (@name)";
-        }
-
-        public override string getUpdateString() {
-            return $"UPDATE {getTableName()} SET name=@name WHERE id=@id";
+        public override List<string> getColumns() {
+            return new List<string> { "type", "name", "value", "belongsToStep" };
         }
     }
 

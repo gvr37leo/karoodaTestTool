@@ -8,22 +8,19 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Http;
-
+using System;
 
 namespace karoodaTestToolServer.Controllers
 {
 
     public class TestCaseDAL : AbstractDAL<TestCase> {
+
         public override string getTableName() {
             return "TestCase";
         }
 
-        public override string getPostString() {
-            return $"INSERT INTO {getTableName()} (name) VALUES (@name)";
-        }
-
-        public override string getUpdateString() {
-            return $"UPDATE {getTableName()} SET name=@name WHERE id=@id";
+        public override List<string> getColumns() {
+            return new List<string> { "name" };
         }
     }
 

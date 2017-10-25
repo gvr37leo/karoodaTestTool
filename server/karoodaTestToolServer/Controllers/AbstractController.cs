@@ -13,27 +13,47 @@ namespace karoodaTestToolServer.Controllers
     public abstract class AbstractDAL<T> {
         private MsSqlUtils _sqlUtils;
         public abstract string getTableName();
-        public abstract string getUpdateString();
-        public abstract string getPostString();
+        public abstract List<string> getColumns();
 
         public AbstractDAL() {
             _sqlUtils = new MsSqlUtils(ConfigurationManager.ConnectionStrings["SQLCon"].ConnectionString);
         }
+
+
+
 
         public List<T> Get() {
             return _sqlUtils.Query<T>($"SELECT * FROM {getTableName()}").ToList();
         }
 
         public int Insert(T entity) {
-            return _sqlUtils.Execute(getPostString(), entity);
+            return _sqlUtils.Execute($"INSERT INTO {getTableName()} ({String.Join(",", getColumns())}) VALUES ({postString()})", entity);
         }
 
         public int Update(T entity) {
-            return _sqlUtils.Execute(getUpdateString(), entity);
+            return _sqlUtils.Execute($"UPDATE {getTableName()} SET {updatestring()} WHERE id=@id", entity);
         }
 
         public int Delete(int id) {
             return _sqlUtils.Execute($"delete from {getTableName()} WHERE id=@id", id);
+        }
+
+
+
+
+
+
+
+        private string postString() {
+            return String.Join(",", getColumns().Select((column) => $"@{column}")); 
+        }
+
+        private string updatestring() {
+            List<string> cols = new List<string>();
+            foreach (string column in getColumns()) {
+                cols.Add($"{column}=@{column}");
+            }
+            return String.Join(",", cols);
         }
 
     }

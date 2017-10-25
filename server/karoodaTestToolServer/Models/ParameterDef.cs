@@ -6,17 +6,16 @@ using System.Web;
 namespace karoodaTestToolServer.Models {
     public class ParameterDef {
         public int id;
-        public ParamType type;
         public string name;
+        public ParamType type;
         public string value;
-        public int belongsToFunction;
-
-        public string pointerType;
-
+        public int belongsToStep;
+        //public string pointerType;
 
 
-        public ParameterDef(string name, ParamType type) {
-            this.name = name;
+
+        public ParameterDef(string paramName, ParamType type) {
+            this.name = paramName;
             this.type = type;
         }
     }
