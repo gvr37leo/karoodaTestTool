@@ -13,13 +13,18 @@ namespace karoodaTestToolServer.Controllers{
             return "Parameter";
         }
 
-        public override List<string> getColumns() {
-            return new List<string> { "type", "name", "value", "belongsToStep" };
+        public override List<Column> getColumns() {
+            return new List<Column> {
+                new Column("type", DataType.number),
+                new Column("name", DataType.text),
+                new Column("value", DataType.text),
+                new Column("belongsToStep", DataType.number)
+            };
         }
     }
 
     public class ParameterController : AbstractController<ParameterDef> {
-        public override AbstractDAL<ParameterDef> DALGetter() {
+        public override AbstractDAL<ParameterDef> DALRetriever() {
             return new ParameterDAL();
         }
     }

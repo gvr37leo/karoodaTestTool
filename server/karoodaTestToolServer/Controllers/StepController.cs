@@ -15,13 +15,17 @@ namespace karoodaTestToolServer.Controllers {
             return "Step";
         }
 
-        public override List<string> getColumns() {
-            return new List<string> { "functionPointer", "belongsToTestcase", "stepOrder" };
+        public override List<Column> getColumns() {
+            return new List<Column> {
+                new Column("functionPointer",DataType.number),
+                new Column("belongsToTestcase", DataType.number),
+                new Column("stepOrder", DataType.number)
+            };
         }
     }
 
     public class StepController : AbstractController<Step> {
-        public override AbstractDAL<Step> DALGetter() {
+        public override AbstractDAL<Step> DALRetriever() {
             return new StepDAL();
         }
     }

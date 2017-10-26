@@ -1,7 +1,17 @@
 /// <reference path="models/step.ts" />
-function get(destination: string,callback:(data:any[]) => void) {
-    fetch(`http://localhost:56232/api/${destination}`, {
-        method: "GET"
+
+class Filter{
+    filterEntrys:FilterEntry[] = []
+}
+
+class FilterEntry{
+    field:string
+    value:string
+}
+
+function get(destination: string, filter: Filter,callback:(data:any[]) => void) {
+    fetch(`http://localhost:56232/api/${destination}/GetFiltered`, {
+        method: "POST"
     }).then((res) => {
         return res.json()
     }).then((res) => {
@@ -10,7 +20,7 @@ function get(destination: string,callback:(data:any[]) => void) {
 }
 
 function save<T>(destination: string,obj: T, callback: () => void) {
-    fetch(`http://localhost:56232/api/${destination}`, {
+    fetch(`http://localhost:56232/api/${destination}/Put`, {
         method: "PUT",
         body: JSON.stringify(obj)
     }).then((res) => {
@@ -21,7 +31,7 @@ function save<T>(destination: string,obj: T, callback: () => void) {
 }
 
 function post<T>(destination: string, obj: T,  callback: () => void) {
-    fetch(`http://localhost:56232/api/${destination}`, {
+    fetch(`http://localhost:56232/api/${destination}/Post`, {
         method: "POST",
         body:JSON.stringify(obj)
     }).then((res) => {
@@ -32,7 +42,7 @@ function post<T>(destination: string, obj: T,  callback: () => void) {
 }
 
 function del(destination: string, _id: string, callback: () => void) {
-    fetch(`http://localhost:56232/api/${destination}`, {
+    fetch(`http://localhost:56232/api/${destination}/Delete`, {
         method: "DELETE"
     }).then((res) => {
         return res.json()
@@ -48,8 +58,8 @@ function executeTestCase(_id: string){
 
 }
 
-function getTestCases(callback: (data: any[]) => void){
-    get('Testcase',(steps) => {
+function getTestCases(filter:Filter, callback: (data: any[]) => void){
+    get('Testcase', filter, (steps) => {
         callback(steps)
     })
 }
@@ -76,8 +86,8 @@ function postTestCase(testcase: Testcase, callback: () => void){
 
 //------------------------------STEP---------------------------------
 
-function getSteps(callback: (data: any[]) => void) {
-    get('Step', (steps) => {
+function getSteps(filter: Filter, callback: (data: any[]) => void) {
+    get('Step', filter, (steps) => {
         callback(steps)
     })
 }

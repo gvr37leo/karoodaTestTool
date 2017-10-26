@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using System;
+using System.Web.Http.Description;
 
 namespace karoodaTestToolServer.Controllers
 {
@@ -19,13 +20,16 @@ namespace karoodaTestToolServer.Controllers
             return "TestCase";
         }
 
-        public override List<string> getColumns() {
-            return new List<string> { "name" };
+        public override List<Column> getColumns() {
+            return new List<Column> {
+                new Column("name", DataType.text)
+            };
         }
     }
 
     public class TestCaseController : AbstractController<TestCase> {
-        public override AbstractDAL<TestCase> DALGetter() {
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public override AbstractDAL<TestCase> DALRetriever() {
             return new TestCaseDAL();
         }
 

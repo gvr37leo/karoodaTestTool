@@ -7,35 +7,86 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 
-namespace karoodaTestToolServer.Controllers
-{
+namespace karoodaTestToolServer.Controllers{
+
+    public class Filter {
+        public List<FilterEntry> filterEntrys = new List<FilterEntry>();
+    }
+
+    public class FilterEntry {
+        public string field;
+        public string value;
+    }
+
+    public class Column {
+        public string name;
+        public DataType dataType;
+
+        public Column(string name, DataType dataType) {
+            this.name = name;
+            this.dataType = dataType;
+        }
+    }
+
+    public enum DataType{
+        number,text
+    }
+
     public abstract class AbstractDAL<T> {
         private MsSqlUtils _sqlUtils;
         public abstract string getTableName();
-        public abstract List<string> getColumns();
+        public abstract List<Column> getColumns();
 
         public AbstractDAL() {
             _sqlUtils = new MsSqlUtils(ConfigurationManager.ConnectionStrings["SQLCon"].ConnectionString);
         }
 
+        public List<T> Get(Filter filter) {
+            Dictionary<string, Column> columns = getColumns().ToDictionary(p => p.name);
 
+            if (filter.filterEntrys.Count() == 0) {
+                return _sqlUtils.Query<T>($"SELECT * FROM {getTableName()}").ToList();
+            } else {//errors when all fields are invalid
+                string query = $"SELECT * FROM {getTableName()} WHERE ";
+                List<string> filterValues = new List<string>();
 
+                foreach(FilterEntry filterEntry in filter.filterEntrys) {
+                    if (filterEntry.field == "id") {
+                        filterValues.Add($"{filterEntry.field}={filterEntry.value}");//sql injection: filterentry.value comes from client
+                    } else if(columns.ContainsKey(filterEntry.field)) {
+                        switch (columns[filterEntry.field].dataType){
+                            case DataType.number: {
+                                    filterValues.Add($"{filterEntry.field}={filterEntry.value}");
+                                    break;
+                                }
+                            case DataType.text: {
+                                    filterValues.Add($"{filterEntry.field}='{filterEntry.value}'");
+                                    break;
+                                }
+                        }
+                    }
+                }
 
-        public List<T> Get() {
-            return _sqlUtils.Query<T>($"SELECT * FROM {getTableName()}").ToList();
+                query += String.Join(",",filterValues);
+                return _sqlUtils.Query<T>(query).ToList();
+            }
         }
 
         public int Insert(T entity) {
-            return _sqlUtils.Execute($"INSERT INTO {getTableName()} ({String.Join(",", getColumns())}) VALUES ({postString()})", entity);
+            string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns())}) VALUES ({postString()})";
+            return _sqlUtils.Execute(query, entity);
         }
 
         public int Update(T entity) {
-            return _sqlUtils.Execute($"UPDATE {getTableName()} SET {updatestring()} WHERE id=@id", entity);
+            string query = $"UPDATE {getTableName()} SET {updatestring()} WHERE id=@id";
+            return _sqlUtils.Execute(query, entity);
         }
 
         public int Delete(int id) {
-            return _sqlUtils.Execute($"delete from {getTableName()} WHERE id=@id", id);
+            string query = $"delete from {getTableName()} WHERE id=@id";
+            return _sqlUtils.Execute(query, id);
         }
 
 
@@ -45,13 +96,13 @@ namespace karoodaTestToolServer.Controllers
 
 
         private string postString() {
-            return String.Join(",", getColumns().Select((column) => $"@{column}")); 
+            return String.Join(",", getColumns().Select((column) => $"@{column.name}")); 
         }
 
         private string updatestring() {
             List<string> cols = new List<string>();
-            foreach (string column in getColumns()) {
-                cols.Add($"{column}=@{column}");
+            foreach (Column column in getColumns()) {
+                cols.Add($"{column.name}=@{column.name}");
             }
             return String.Join(",", cols);
         }
@@ -59,17 +110,24 @@ namespace karoodaTestToolServer.Controllers
     }
 
     public abstract class AbstractController<T> : ApiController{
-        public abstract AbstractDAL<T> DALGetter();
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public abstract AbstractDAL<T> DALRetriever();
         private AbstractDAL<T> DAL;
 
         public AbstractController() {
-            DAL = DALGetter();
+            DAL = DALRetriever();
         }
 
-        [HttpGet]
-        public IHttpActionResult Get() {
-            return Ok(DAL.Get());
+        //[HttpGet]
+        //public IHttpActionResult Get() {
+        //    return Ok(DAL.Get());
+        //}
+
+        [HttpPost]
+        public IHttpActionResult GetFiltered(Filter filter) {
+            return Ok(DAL.Get(filter));
         }
+
 
         [HttpPost]
         public IHttpActionResult Post(T entity) {
