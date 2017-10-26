@@ -6,3 +6,7 @@ class Step{//functioncall
         this.parameters = parameters
     }
 }
+
+class StepParameter{
+    
+}

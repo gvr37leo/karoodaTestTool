@@ -12,11 +12,22 @@ namespace karoodaTestToolServer.Models {
         public int belongsToStep;
         //public string pointerType;
 
-
+        //string name,
+        public ParameterDef(int id, string type,  string value, int belongsToStep) {
+            this.id = id;
+            //this.type = type;
+            //this.name = name;
+            this.value = value;
+            this.belongsToStep = belongsToStep;
+        }
 
         public ParameterDef(string paramName, ParamType type) {
             this.name = paramName;
             this.type = type;
+        }
+
+        public ParameterDef() {
+
         }
     }
 

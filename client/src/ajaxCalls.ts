@@ -11,7 +11,9 @@ class FilterEntry{
 
 function get(destination: string, filter: Filter,callback:(data:any[]) => void) {
     fetch(`http://localhost:56232/api/${destination}/GetFiltered`, {
-        method: "POST"
+        method: "POST",
+        body:JSON.stringify(filter),
+        headers: new Headers({ 'content-type': 'application/json' })
     }).then((res) => {
         return res.json()
     }).then((res) => {
@@ -22,7 +24,9 @@ function get(destination: string, filter: Filter,callback:(data:any[]) => void) 
 function save<T>(destination: string,obj: T, callback: () => void) {
     fetch(`http://localhost:56232/api/${destination}/Put`, {
         method: "PUT",
-        body: JSON.stringify(obj)
+        body: JSON.stringify(obj),
+        headers: new Headers({ 'content-type': 'application/json' })
+        
     }).then((res) => {
         return res.json()
     }).then((res) => {
@@ -33,7 +37,8 @@ function save<T>(destination: string,obj: T, callback: () => void) {
 function post<T>(destination: string, obj: T,  callback: () => void) {
     fetch(`http://localhost:56232/api/${destination}/Post`, {
         method: "POST",
-        body:JSON.stringify(obj)
+        body:JSON.stringify(obj),
+        headers: new Headers({ 'content-type': 'application/json' })
     }).then((res) => {
         return res.json()
     }).then((res) => {
@@ -107,5 +112,53 @@ function deleteStep(id: string, callback: () => void) {
 function postStep(step: Step, callback: () => void) {
     post('Step', step, () => {
         callback()
+    })
+}
+
+//------------------------------STEPPARAMETERS---------------------------------
+
+function getParameters(filter: Filter, callback: (data: any[]) => void) {
+    get('Parameter', filter, (steps) => {
+        callback(steps)
+    })
+}
+
+function saveParameter(step: StepParameter, callback: () => void) {
+    save('Parameter', step, () => {
+        callback()
+    })
+}
+
+function deleteParameter(id: string, callback: () => void) {
+    del('Parameter', id, () => {
+        callback()
+    })
+}
+
+function postParameter(step: StepParameter, callback: () => void) {
+    post('Parameter', step, () => {
+        callback()
+    })
+}
+
+//------------------------------FUNCTIONDEFINITIONS---------------------------------
+
+function getFunctionDefinition(funcname:string,callback: (data: any[]) => void) {
+    fetch(`http://localhost:56232/api/Function/Get/${funcname}`, {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback(res)
+    })
+}
+
+function getFunctionDefinitions(callback: (data: any[]) => void){
+    fetch(`http://localhost:56232/api/Function/Get`, {
+        method: "GET"
+    }).then((res) => {
+        return res.json()
+    }).then((res) => {
+        callback(res)
     })
 }

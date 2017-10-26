@@ -38,11 +38,24 @@ namespace karoodaTestToolServer.Controllers
             IWebDriver driver = new ChromeDriver();
             GenericSteps gensteps = new GenericSteps(driver);
 
-            //testCase.steps = new StepController()._GetStepsFromTestcase(id);
+            Filter filter = new Filter();
+            filter.filterEntrys = new List<FilterEntry>() { new FilterEntry("belongsToTestcase",$"{id}")};
+            StepDAL stepDAL = new StepDAL();
 
-            //foreach (Step step in testCase.steps) {
-            //    gensteps.Call(step);
-            //}
+            List<Step> steps = stepDAL.Get(filter);
+            foreach(Step step in steps) {
+
+                
+                Filter parameterFilter = new Filter();
+                parameterFilter.filterEntrys = new List<FilterEntry>() { new FilterEntry("belongsToStep", $"{step.id}") };
+                ParameterDAL parameterDAL = new ParameterDAL();
+                List<ParameterDef> parameters = parameterDAL.Get(parameterFilter);
+                step.parameters = parameters;
+
+
+                gensteps.Call(step);
+            }
+
 
             driver.Quit();
             return Ok();

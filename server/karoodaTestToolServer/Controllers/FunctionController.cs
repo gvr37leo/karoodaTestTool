@@ -46,6 +46,9 @@ namespace karoodaTestToolServer.Controllers{
             functionMap.Add(key, new FunctionDef(key, description, parameters));
         }
 
+
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Get() {
             List<FunctionDef> funcs = functionMap.Select((pair) => pair.Value).ToList();
             return Ok(funcs);
@@ -55,6 +58,8 @@ namespace karoodaTestToolServer.Controllers{
             return functionMap[funcname];
         }
 
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Get(string funcname) {
             FunctionDef result = functionMap[funcname];
 

@@ -21,9 +21,13 @@ class StepView{
         this.parameters = this.element.querySelector('#parameters') as HTMLElement
         this.buttonContainer = this.element.querySelector('#stepbuttons') as HTMLElement
 
-        for(var parameter of this.step.parameters){//should probably do request to functiondefintition
-            new TextWidget(this.parameters)
-        }
+
+        getParameters({ filterEntrys: [] }, (stepParameters) => {
+            for (var parameter of stepParameters) {
+                new TextWidget(this.parameters)
+            }
+        })
+        
 
         this.uprequest = new EventSystem();
         this.downrequest = new EventSystem();

@@ -17,39 +17,40 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void Call(Step step) {
+            Dictionary<string, ParameterDef> paramDict = step.parameters.ToDictionary(param => param.name);
 
-            //step.
 
-            //switch (step.functionPointer) {
-            //    case "click": {
-            //            Click(paramDict["selector"].value);
-            //            break;
-            //        }
-            //    case "write": {
-            //            Write(paramDict["selector"].value, paramDict["text"].value);
-            //            break;
-            //        }
-            //    case "refresh": {
-            //            Refresh();
-            //            break;
-            //        }
-            //    case "gotourl": {
-            //            GoToURL(paramDict["url"].value);
-            //            break;
-            //        }
-            //    case "assert": {
-            //            Assert();
-            //            break;
-            //        }
-            //    case "screenshot": {
-            //            Screenshot();
-            //            break;
-            //        }
-            //    case "scroll": {
-            //            Scroll(paramDict["selector"].value);
-            //            break;
-            //        }
-            //}
+
+            switch (step.functionPointer) {
+                case "click": {
+                        Click(paramDict["selector"].value);
+                        break;
+                    }
+                case "write": {
+                        Write(paramDict["selector"].value, paramDict["text"].value);
+                        break;
+                    }
+                case "refresh": {
+                        Refresh();
+                        break;
+                    }
+                case "gotourl": {
+                        GoToURL(paramDict["url"].value);
+                        break;
+                    }
+                case "assert": {
+                        Assert();
+                        break;
+                    }
+                case "screenshot": {
+                        Screenshot();
+                        break;
+                    }
+                case "scroll": {
+                        Scroll(paramDict["selector"].value);
+                        break;
+                    }
+            }
 
 
 
@@ -71,7 +72,6 @@ namespace karoodaTestToolServer.Steps {
 
         public void GoToURL(string url) {
             driver.Navigate().GoToUrl(url);
-            driver.Navigate().Refresh();
         }
 
         public void Assert() {

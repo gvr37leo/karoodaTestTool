@@ -1,4 +1,5 @@
-﻿using GorillaIT.DbUtils.MsSqlUtils;
+﻿using Dapper;
+using GorillaIT.DbUtils.MsSqlUtils;
 using karoodaTestToolServer.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace karoodaTestToolServer.Controllers{
@@ -18,6 +20,11 @@ namespace karoodaTestToolServer.Controllers{
     public class FilterEntry {
         public string field;
         public string value;
+
+        public FilterEntry(string field, string value) {
+            this.field = field;
+            this.value = value;
+        }
     }
 
     public class Column {
@@ -75,7 +82,7 @@ namespace karoodaTestToolServer.Controllers{
         }
 
         public int Insert(T entity) {
-            string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns())}) VALUES ({postString()})";
+            string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns().Select(col => col.name))}) VALUES ({postString()})";
             return _sqlUtils.Execute(query, entity);
         }
 
@@ -112,7 +119,7 @@ namespace karoodaTestToolServer.Controllers{
     public abstract class AbstractController<T> : ApiController{
         [ApiExplorerSettings(IgnoreApi = true)]
         public abstract AbstractDAL<T> DALRetriever();
-        private AbstractDAL<T> DAL;
+        protected AbstractDAL<T> DAL;
 
         public AbstractController() {
             DAL = DALRetriever();
@@ -124,22 +131,25 @@ namespace karoodaTestToolServer.Controllers{
         //}
 
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult GetFiltered(Filter filter) {
             return Ok(DAL.Get(filter));
         }
 
-
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Post(T entity) {
             return check(DAL.Insert(entity));
         }
 
         [HttpPut]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Put(T entity) {
             return check(DAL.Update(entity));
         }
 
         [HttpDelete]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Delete(int id) {
             return check(DAL.Delete(id));
         }
