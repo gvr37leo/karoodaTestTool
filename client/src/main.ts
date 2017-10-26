@@ -3,7 +3,7 @@
 
 var mycontainer = document.querySelector('#mycontainer') as HTMLElement
 
-var testcase = new TestcaseView(mycontainer)
+var testcase = new TestcaseView(mycontainer, new Testcase(1, 'paul'))
 
 
 

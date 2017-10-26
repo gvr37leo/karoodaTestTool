@@ -1,6 +1,7 @@
 /// <reference path="../models/testcase.ts" />
 /// <reference path="testcaseView.ts" />
 
+
 class TestToolView{
     element:HTMLElement
     temple:string = ``
@@ -15,7 +16,7 @@ class TestToolView{
         })
 
         pathFinder.register(":id", (params) => {
-            new TestcaseView(this.element)
+            new TestcaseView(this.element,new Testcase(1,'paul'))
         })
 
 

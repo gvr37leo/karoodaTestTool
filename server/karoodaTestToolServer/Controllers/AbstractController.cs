@@ -41,7 +41,11 @@ namespace karoodaTestToolServer.Controllers{
         number,text
     }
 
-    public abstract class AbstractDAL<T> {
+    public interface IToDynamicObject {
+        object ToObject();
+    }
+
+    public abstract class AbstractDAL<T> where T :IToDynamicObject {
         private MsSqlUtils _sqlUtils;
         public abstract string getTableName();
         public abstract List<Column> getColumns();
@@ -83,12 +87,12 @@ namespace karoodaTestToolServer.Controllers{
 
         public int Insert(T entity) {
             string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns().Select(col => col.name))}) VALUES ({postString()})";
-            return _sqlUtils.Execute(query, entity);
+            return _sqlUtils.Execute(query, entity.ToObject());
         }
 
         public int Update(T entity) {
             string query = $"UPDATE {getTableName()} SET {updatestring()} WHERE id=@id";
-            return _sqlUtils.Execute(query, entity);
+            return _sqlUtils.Execute(query, entity.ToObject());
         }
 
         public int Delete(int id) {
@@ -116,7 +120,7 @@ namespace karoodaTestToolServer.Controllers{
 
     }
 
-    public abstract class AbstractController<T> : ApiController{
+    public abstract class AbstractController<T> : ApiController where T:IToDynamicObject{
         [ApiExplorerSettings(IgnoreApi = true)]
         public abstract AbstractDAL<T> DALRetriever();
         protected AbstractDAL<T> DAL;

@@ -10,6 +10,7 @@
 
 
 class TestcaseView {
+    titleWidget: TextWidget;
     newsteprow: HTMLElement;
     stepstable: HTMLElement;
     attributerow: HTMLElement;
@@ -27,7 +28,7 @@ class TestcaseView {
     `
     element: HTMLElement
 
-    constructor(element: HTMLElement) {
+    constructor(element: HTMLElement,testcase:Testcase) {
         this.element = createAndAppend(element, this.template)
 
         this.buttonrow = this.element.querySelector('#buttonrow') as HTMLElement
@@ -45,10 +46,13 @@ class TestcaseView {
         })
 
         new Button(this.buttonrow, 'execute','btn btn-primary',() => {
-            
+            executeTestCase(testcase.id,() => {
+
+            })
         })
 
-        new TextWidget(this.attributerow)
+        this.titleWidget = new TextWidget(this.attributerow)
+        this.titleWidget.value.set(testcase.name)
         
         var steps = getSteps({ filterEntrys:[]},(steps) => {
             new GridControl(this.stepstable, steps)

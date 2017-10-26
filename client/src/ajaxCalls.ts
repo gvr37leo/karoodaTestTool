@@ -46,7 +46,7 @@ function post<T>(destination: string, obj: T,  callback: () => void) {
     })
 }
 
-function del(destination: string, _id: string, callback: () => void) {
+function del(destination: string, id: number, callback: () => void) {
     fetch(`http://localhost:56232/api/${destination}/Delete`, {
         method: "DELETE"
     }).then((res) => {
@@ -59,8 +59,15 @@ function del(destination: string, _id: string, callback: () => void) {
 
 
 //------------------------------TESTCASE---------------------------------
-function executeTestCase(_id: string){
-
+function executeTestCase(id: number, callback: () => void){
+    fetch(`http://localhost:56232/api/Testcase/Execute/${id}`, {
+        method: "POST",
+        headers: new Headers({ 'content-type': 'application/json' })
+    }).then((res) => {
+        return res.text()
+    }).then((res) => {
+        callback()
+    })
 }
 
 function getTestCases(filter:Filter, callback: (data: any[]) => void){
@@ -75,7 +82,7 @@ function saveTestCase(testcase: Testcase, callback: () => void){
     })
 }
 
-function deleteTestCase(id: string, callback: () => void){
+function deleteTestCase(id: number, callback: () => void){
     del('Testcase',id,() => {
         callback()
     })
@@ -103,7 +110,7 @@ function saveStep(step: Step, callback: () => void) {
     })
 }
 
-function deleteStep(id: string, callback: () => void) {
+function deleteStep(id: number, callback: () => void) {
     del('Step', id, () => {
         callback()
     })
@@ -129,7 +136,7 @@ function saveParameter(step: StepParameter, callback: () => void) {
     })
 }
 
-function deleteParameter(id: string, callback: () => void) {
+function deleteParameter(id: number, callback: () => void) {
     del('Parameter', id, () => {
         callback()
     })

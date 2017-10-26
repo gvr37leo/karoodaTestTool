@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.Http;
 using System;
 using System.Web.Http.Description;
+using System.Web.Http.Cors;
 
 namespace karoodaTestToolServer.Controllers
 {
@@ -34,6 +35,7 @@ namespace karoodaTestToolServer.Controllers
         }
 
         [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Execute(int id) {
             IWebDriver driver = new ChromeDriver();
             GenericSteps gensteps = new GenericSteps(driver);

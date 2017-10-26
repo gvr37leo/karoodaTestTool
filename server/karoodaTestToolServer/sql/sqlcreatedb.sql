@@ -17,7 +17,7 @@ create table Parameter(
 	id int identity(1,1)			NOT NULL,
 	name	varchar(255)				NOT NULL,
 	[type] varchar(255)				NOT NULL,
-	[value] varchar(255)				NOT NULL,
+	[value] varchar(255),				
 	belongsToStep int		NOT NULL
 	foreign key (belongsToStep) references  Step(id)
 	primary key(id)

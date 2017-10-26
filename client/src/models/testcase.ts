@@ -5,10 +5,12 @@
 
 
 class Testcase{
+    id:number
     name:string
     steps:Step[] = []
 
-    constructor(){
-        
+    constructor(id: number, name: string){
+        this.id = id;
+        this.name = name;
     }
 }

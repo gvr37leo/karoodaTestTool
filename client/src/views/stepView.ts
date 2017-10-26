@@ -1,4 +1,5 @@
 class StepView{
+    dirtiedEvent: EventSystem<any>;
     downrequest: EventSystem<number>;
     uprequest: EventSystem<number>;
     buttonContainer: HTMLElement;
@@ -20,11 +21,17 @@ class StepView{
         this.description = this.element.querySelector('#description') as HTMLElement
         this.parameters = this.element.querySelector('#parameters') as HTMLElement
         this.buttonContainer = this.element.querySelector('#stepbuttons') as HTMLElement
-
+        this.dirtiedEvent = new EventSystem<any>();
 
         getParameters({ filterEntrys: [] }, (stepParameters) => {
-            for (var parameter of stepParameters) {
-                new TextWidget(this.parameters)
+            this.step.parameters = stepParameters
+            for (let parameter of stepParameters) {
+                let textWidget = new TextWidget(this.parameters)
+                textWidget.value.set(parameter.value)
+                textWidget.value.onchange.listen((val) => {
+                    parameter.value = val;
+                    this.dirtiedEvent.trigger(0)
+                })
             }
         })
         
@@ -40,7 +47,7 @@ class StepView{
 
         })
 
-        new Button(this.buttonContainer, 'save', 'btn btn-success', () => {
+        new DisableableButton(this.buttonContainer, 'save', 'btn btn-success',this.dirtiedEvent, () => {
 
         })
 
