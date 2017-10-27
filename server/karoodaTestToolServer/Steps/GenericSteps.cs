@@ -50,6 +50,10 @@ namespace karoodaTestToolServer.Steps {
                         Scroll(paramDict["selector"].value);
                         break;
                     }
+                default: {
+                        //maybe throw error
+                        break;
+                    }
             }
 
 

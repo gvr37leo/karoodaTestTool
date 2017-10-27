@@ -10,6 +10,7 @@
 
 
 class TestcaseView {
+    dirtiedEvent: EventSystem<{}>;
     titleWidget: TextWidget;
     newsteprow: HTMLElement;
     stepstable: HTMLElement;
@@ -36,24 +37,32 @@ class TestcaseView {
         this.attributerow = this.element.querySelector('#attributerow') as HTMLElement
         this.stepstable = this.element.querySelector('#stepstable') as HTMLElement
         this.newsteprow = this.element.querySelector('#newsteprow') as HTMLElement
-        
+        this.dirtiedEvent = new EventSystem()
+
         //up,save
         new Button(this.buttonrow, 'up', 'btn btn-default', () => {
-
+            window.location.hash = ''
         })
 
-        new Button(this.buttonrow, 'save', 'btn btn-success', () => {
+        new DisableableButton(this.buttonrow, 'save', 'btn btn-success', this.dirtiedEvent, () => {
+            saveTestCase(this.testcase,() => {
 
+            })
         })
 
         new Button(this.buttonrow, 'execute','btn btn-primary',() => {
-            executeTestCase(testcase.id,() => {
+            executeTestCase(this.testcase.id,() => {
 
             })
         })
 
         this.titleWidget = new TextWidget(this.attributerow)
-        this.titleWidget.value.set(testcase.name)
+        this.titleWidget.value.set(this.testcase.name)
+        this.titleWidget.value.onchange.listen((val) => {
+            this.testcase.name = val;
+            this.dirtiedEvent.trigger(0)
+        })
+
         
         this.updateTable()
 
@@ -63,9 +72,12 @@ class TestcaseView {
             }, res)
 
             dropdownWidget.value.onchange.listen((val) => {
-                postStep(new Step(val.description,this.testcase.id),() => {
+                postStep(new Step(val.name,this.testcase.id),() => {
                     this.updateTable()
                 })
+                dropdownWidget.filter = ''
+                dropdownWidget.updateList()
+                dropdownWidget.value.clear()
             })
 
             // dropdownWidget.input.addEventListener('keypress',(e) => {
@@ -79,7 +91,7 @@ class TestcaseView {
 
     updateTable(){
         this.stepstable.innerHTML = ''
-        getSteps({ filterEntrys: [] }, (steps) => {
+        getSteps({ filterEntrys: [{ field:"belongsToTestcase",value:`${this.testcase.id}`}] }, (steps) => {
             var gridControl = new GridControl(this.stepstable, steps)
             gridControl.refreshRequest.listen(() => {
                 this.updateTable()

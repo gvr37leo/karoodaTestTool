@@ -1,23 +1,29 @@
-/// <reference path="../models/testcase.ts" />
-/// <reference path="testcaseView.ts" />
-/// <reference path="../pathfinder.ts" />
+/// <reference path="models/testcase.ts" />
+/// <reference path="views/testcaseView.ts" />
+/// <reference path="pathfinder.ts" />
+/// <reference path="views/testcaseOverView.ts" />
 
 
-class TestToolView{
+class TestTool{
     element:HTMLElement
     temple:string = ``
 
 
     constructor(element:HTMLElement){
+        this.element = element
         var pathFinder = new PathFinder()
         
 
         pathFinder.register("",() => {
-            this.render()
+            this.element.innerHTML = ''
+            new TestcaseOverView(this.element)
         })
 
         pathFinder.register(":id", (params) => {
-            new TestcaseView(this.element,new Testcase(1,'paul'))
+            this.element.innerHTML = ''
+            getTestCases({filterEntrys:[{field:"id",value:`${params[0]}`}]},(testcases) => {
+                new TestcaseView(this.element, testcases[0])
+            })
         })
 
 
@@ -25,10 +31,6 @@ class TestToolView{
         window.addEventListener("hashchange", (e: HashChangeEvent) => {
             pathFinder.trigger(this.removeHash(location.hash))
         })
-    }
-
-    render(){
-
     }
 
     private removeHash(string: string): string {

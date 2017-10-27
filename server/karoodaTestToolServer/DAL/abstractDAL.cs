@@ -12,6 +12,7 @@ namespace karoodaTestToolServer.DAL {
 
     public interface IToDynamicObject {
         object ToObject();
+        object ToObjectWithID();
     }
 
     public class Column {
@@ -84,7 +85,7 @@ namespace karoodaTestToolServer.DAL {
 
         public int Update(T entity) {
             string query = $"UPDATE {getTableName()} SET {updatestring()} WHERE id=@id";
-            return _sqlUtils.Execute(query, entity.ToObject());
+            return _sqlUtils.Execute(query, entity.ToObjectWithID());
         }
 
         public int Delete(int id) {

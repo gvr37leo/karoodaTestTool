@@ -14,5 +14,9 @@ namespace karoodaTestToolServer.Models {
         public object ToObject() {
             return new {name};
         }
+
+        public object ToObjectWithID() {
+            return new { name,id };
+        }
     }
 }

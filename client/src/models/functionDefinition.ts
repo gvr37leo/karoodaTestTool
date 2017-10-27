@@ -1,5 +1,6 @@
 class FunctionDefinition{
-    description:string
+    name:string
+    description: string;
 
 
     constructor(){

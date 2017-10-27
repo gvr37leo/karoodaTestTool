@@ -25,3 +25,11 @@
 input{
     max-width: 196px;
 }
+
+#testcase-container > *{
+    margin-right: 10px;
+}
+
+#parameters {
+    min-width: 200px;
+}

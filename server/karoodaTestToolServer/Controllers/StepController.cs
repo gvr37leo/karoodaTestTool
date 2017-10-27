@@ -8,14 +8,21 @@ using System.Linq;
 using System.Web.Http;
 using System;
 using karoodaTestToolServer.DAL;
+using System.Web.Http.Cors;
 
 namespace karoodaTestToolServer.Controllers {
-
-    
-
     public class StepController : AbstractController<Step> {
         public override AbstractDAL<Step> DALRetriever() {
             return new StepDAL();
+        }
+
+        [HttpPost]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public new IHttpActionResult Post(Step entity) {
+
+            DAL.Insert(entity);
+
+            return Ok();
         }
     }
 }

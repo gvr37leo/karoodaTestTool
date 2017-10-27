@@ -9,8 +9,8 @@ class StepView{
     element:HTMLElement
     step:Step
     template:string = `
-        <div style="display:flex;">
-            <div id="description"></div>
+        <div style="display:flex; align-items:center;">
+            <div id="description" style="min-width:150px;"></div>
             <div id="parameters"></div>
             <div id="stepbuttons"></div>
         </div>
@@ -24,7 +24,10 @@ class StepView{
         this.buttonContainer = this.element.querySelector('#stepbuttons') as HTMLElement
         this.dirtiedEvent = new EventSystem<any>();
 
-        getParameters({ filterEntrys: [] }, (stepParameters) => {
+        this.description.innerHTML = this.step.functionPointer
+        // createAndAppend(this.description, `<p>${this.step.functionPointer}</p>`)
+
+        getParameters({ filterEntrys: [{ field:"belongsToStep",value:`${this.step.id}`}] }, (stepParameters) => {
             this.step.parameters = stepParameters
             for (let parameter of stepParameters) {
                 let textWidget = new TextWidget(this.parameters)

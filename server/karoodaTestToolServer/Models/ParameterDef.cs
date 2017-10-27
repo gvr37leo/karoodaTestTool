@@ -1,4 +1,5 @@
 ﻿using karoodaTestToolServer.Controllers;
+using karoodaTestToolServer.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,10 @@ namespace karoodaTestToolServer.Models {
 
         public object ToObject() {
             return new {name,type,value,belongsToStep };
+        }
+
+        public object ToObjectWithID() {
+            return new { name, type, value, belongsToStep,id };
         }
     }
 
