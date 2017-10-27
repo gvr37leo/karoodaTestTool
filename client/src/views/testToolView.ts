@@ -1,5 +1,6 @@
 /// <reference path="../models/testcase.ts" />
 /// <reference path="testcaseView.ts" />
+/// <reference path="../pathfinder.ts" />
 
 
 class TestToolView{

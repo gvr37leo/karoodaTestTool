@@ -1,9 +1,12 @@
-class Step{//functioncall
-    parameters:any = []
+class Step{
+    id:number
     functionPointer:string
+    belongsToTestcase:number
+    parameters: StepParameter[] = []
 
-    constructor(parameters){
-        this.parameters = parameters
+    constructor(functionPointer: string,belongsToTestcase: number){
+        this.functionPointer = functionPointer
+        this.belongsToTestcase = belongsToTestcase
     }
 }
 

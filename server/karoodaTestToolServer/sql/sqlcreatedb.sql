@@ -9,7 +9,7 @@ create table Step(
 	functionPointer varchar(255)			NOT NULL,
 	belongsToTestcase int			 NOT NULL,
 	stepOrder int NOT NULL
-	foreign key (belongsToTestcase) references  Testcase(id)
+	foreign key (belongsToTestcase) references  Testcase(id) ON DELETE CASCADE
 	primary key(id)
 )
 
@@ -19,6 +19,6 @@ create table Parameter(
 	[type] varchar(255)				NOT NULL,
 	[value] varchar(255),				
 	belongsToStep int		NOT NULL
-	foreign key (belongsToStep) references  Step(id)
+	foreign key (belongsToStep) references  Step(id) ON DELETE CASCADE
 	primary key(id)
 )

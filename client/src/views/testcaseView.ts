@@ -30,6 +30,7 @@ class TestcaseView {
 
     constructor(element: HTMLElement,testcase:Testcase) {
         this.element = createAndAppend(element, this.template)
+        this.testcase = testcase
 
         this.buttonrow = this.element.querySelector('#buttonrow') as HTMLElement
         this.attributerow = this.element.querySelector('#attributerow') as HTMLElement
@@ -54,21 +55,35 @@ class TestcaseView {
         this.titleWidget = new TextWidget(this.attributerow)
         this.titleWidget.value.set(testcase.name)
         
-        var steps = getSteps({ filterEntrys:[]},(steps) => {
-            new GridControl(this.stepstable, steps)
-        })
+        this.updateTable()
 
         getFunctionDefinitions((res) => {
             var dropdownWidget = new DropDownWidget<FunctionDefinition>(this.newsteprow, 'a', (val) => {
                 return val.description
             }, res)
 
-            dropdownWidget.input.addEventListener('keypress',(e) => {
-                if(e.keyCode == 13){//enter
-                    
-                }
+            dropdownWidget.value.onchange.listen((val) => {
+                postStep(new Step(val.description,this.testcase.id),() => {
+                    this.updateTable()
+                })
             })
+
+            // dropdownWidget.input.addEventListener('keypress',(e) => {
+            //     if(e.keyCode == 13){//enter
+                    
+            //     }
+            // })
         })
         
+    }
+
+    updateTable(){
+        this.stepstable.innerHTML = ''
+        getSteps({ filterEntrys: [] }, (steps) => {
+            var gridControl = new GridControl(this.stepstable, steps)
+            gridControl.refreshRequest.listen(() => {
+                this.updateTable()
+            })
+        })
     }
 }

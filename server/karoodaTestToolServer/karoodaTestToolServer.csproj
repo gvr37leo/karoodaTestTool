@@ -147,6 +147,10 @@
     <Compile Include="Controllers\ParameterController.cs" />
     <Compile Include="Controllers\StepController.cs" />
     <Compile Include="Controllers\TestCaseController.cs" />
+    <Compile Include="DAL\AbstractDAL.cs" />
+    <Compile Include="DAL\ParameterDAL.cs" />
+    <Compile Include="DAL\StepDAL.cs" />
+    <Compile Include="DAL\TestCaseDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

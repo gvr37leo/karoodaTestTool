@@ -28,7 +28,7 @@ function save<T>(destination: string,obj: T, callback: () => void) {
         headers: new Headers({ 'content-type': 'application/json' })
         
     }).then((res) => {
-        return res.json()
+        return res.text()
     }).then((res) => {
         callback()
     })
@@ -40,17 +40,17 @@ function post<T>(destination: string, obj: T,  callback: () => void) {
         body:JSON.stringify(obj),
         headers: new Headers({ 'content-type': 'application/json' })
     }).then((res) => {
-        return res.json()
+        return res.text()
     }).then((res) => {
         callback()
     })
 }
 
 function del(destination: string, id: number, callback: () => void) {
-    fetch(`http://localhost:56232/api/${destination}/Delete`, {
+    fetch(`http://localhost:56232/api/${destination}/Delete/${id}`, {
         method: "DELETE"
     }).then((res) => {
-        return res.json()
+        return res.text()
     }).then((res) => {
         callback()
     })

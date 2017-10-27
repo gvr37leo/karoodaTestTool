@@ -11,22 +11,9 @@ using System.Web.Http;
 using System;
 using System.Web.Http.Description;
 using System.Web.Http.Cors;
+using karoodaTestToolServer.DAL;
 
-namespace karoodaTestToolServer.Controllers
-{
-
-    public class TestCaseDAL : AbstractDAL<TestCase> {
-
-        public override string getTableName() {
-            return "TestCase";
-        }
-
-        public override List<Column> getColumns() {
-            return new List<Column> {
-                new Column("name", DataType.text)
-            };
-        }
-    }
+namespace karoodaTestToolServer.Controllers{
 
     public class TestCaseController : AbstractController<TestCase> {
         [ApiExplorerSettings(IgnoreApi = true)]

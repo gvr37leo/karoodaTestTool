@@ -1,4 +1,5 @@
 class StepView{
+    refreshrequest: EventSystem<{}>;
     dirtiedEvent: EventSystem<any>;
     downrequest: EventSystem<number>;
     uprequest: EventSystem<number>;
@@ -38,21 +39,26 @@ class StepView{
 
         this.uprequest = new EventSystem();
         this.downrequest = new EventSystem();
+        this.refreshrequest = new EventSystem()
 
         new Button(this.buttonContainer, 'up','btn btn-default',() => {
             this.uprequest.trigger(0)
         })
 
         new Button(this.buttonContainer, 'down', 'btn btn-default', () => {
-
+            this.downrequest.trigger(0)
         })
 
         new DisableableButton(this.buttonContainer, 'save', 'btn btn-success',this.dirtiedEvent, () => {
-
+            saveStep(this.step,() => {
+                this.refreshrequest.trigger(0)
+            })
         })
 
         new Button(this.buttonContainer, 'delete', 'btn btn-danger', () => {
-
+            deleteStep(this.step.id,() => {
+                this.refreshrequest.trigger(0)
+            })
         })
     }
 }

@@ -7,22 +7,11 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using System;
+using karoodaTestToolServer.DAL;
 
 namespace karoodaTestToolServer.Controllers {
 
-    public class StepDAL : AbstractDAL<Step> {
-        public override string getTableName() {
-            return "Step";
-        }
-
-        public override List<Column> getColumns() {
-            return new List<Column> {
-                new Column("functionPointer",DataType.number),
-                new Column("belongsToTestcase", DataType.number),
-                new Column("stepOrder", DataType.number)
-            };
-        }
-    }
+    
 
     public class StepController : AbstractController<Step> {
         public override AbstractDAL<Step> DALRetriever() {
