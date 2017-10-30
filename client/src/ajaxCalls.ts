@@ -117,7 +117,13 @@ function deleteStep(id: number, callback: () => void) {
 }
 
 function postStep(step: Step, callback: () => void) {
-    post('Step', step, () => {
+    fetch(`http://localhost:56232/api/Step/PostStep`, {
+        method: "POST",
+        body: JSON.stringify(step),
+        headers: new Headers({ 'content-type': 'application/json' })
+    }).then((res) => {
+        return res.text()
+    }).then((res) => {
         callback()
     })
 }

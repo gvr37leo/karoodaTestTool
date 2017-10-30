@@ -18,11 +18,26 @@ namespace karoodaTestToolServer.Controllers {
 
         [HttpPost]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public new IHttpActionResult Post(Step entity) {
+        public IHttpActionResult PostStep(Step step) {
 
-            DAL.Insert(entity);
+            int newStepId = DAL.Insert(step);
+            Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("id", $"{newStepId}") });
+            Step theNewStep = DAL.Get(filter)[0];
 
-            return Ok();
+            FunctionDef function = new FunctionController().GetFunc(theNewStep.functionPointer);
+
+
+            ParameterDAL paramDAL = new ParameterDAL();
+            foreach (ParameterDef parameter in function.parameters) {
+                parameter.belongsToStep = newStepId;
+                paramDAL.Insert(parameter);
+            }
+
+
+            //get step from returned id
+            //get parameters from step.functionpointer
+            //create paramaters and insert
+            return Ok(new { id = newStepId });
         }
     }
 }

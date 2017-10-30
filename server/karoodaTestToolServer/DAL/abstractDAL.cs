@@ -26,6 +26,10 @@ namespace karoodaTestToolServer.DAL {
     }
     public class Filter {
         public List<FilterEntry> filterEntrys = new List<FilterEntry>();
+
+        public Filter(List<FilterEntry> filterEntrys) {
+            this.filterEntrys = filterEntrys;
+        }
     }
 
     public class FilterEntry {
@@ -78,9 +82,14 @@ namespace karoodaTestToolServer.DAL {
             }
         }
 
+        class ID {
+            public int id;
+        }
+
         public int Insert(T entity) {
-            string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns().Select(col => col.name))}) VALUES ({postString()})";
-            return _sqlUtils.Execute(query, entity.ToObject());
+            string query = $"INSERT INTO {getTableName()} ({String.Join(",", getColumns().Select(col => col.name))})OUTPUT INSERTED.id VALUES ({postString()})";
+            int id = _sqlUtils.SingleOrDefault<ID>(query, entity.ToObject()).id;
+            return  id;
         }
 
         public int Update(T entity) {

@@ -12,4 +12,3 @@ class FuncParameter {
 
 }
 
-enum ParamType { text, number, pointer }

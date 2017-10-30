@@ -62,7 +62,8 @@ namespace karoodaTestToolServer.Steps {
 
         public void Click (string selector){
             IWebElement element = driver.FindElement(By.CssSelector(selector));
-            element.Click();
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript("arguments[0].click()", element);//normal click can fail if the element is covered by another element or out of view. javascript doesn't have these issues
         }
 
         public void Write(string selector, string text) {

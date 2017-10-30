@@ -11,5 +11,11 @@ class Step{
 }
 
 class StepParameter{
-    
+    id:number;
+    name:string;
+    type: ParamType;
+    value:string;
+    belongsToStep:number;
 }
+
+enum ParamType { text, number, pointer }

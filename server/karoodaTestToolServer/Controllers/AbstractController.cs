@@ -32,7 +32,7 @@ namespace karoodaTestToolServer.Controllers{
         [HttpPost]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Post(T entity) {
-            return check(DAL.Insert(entity));
+            return Ok(new {id = DAL.Insert(entity)}) ;
         }
 
         [HttpPut]

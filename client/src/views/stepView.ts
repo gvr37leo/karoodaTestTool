@@ -11,7 +11,7 @@ class StepView{
     template:string = `
         <div style="display:flex; align-items:center;">
             <div id="description" style="min-width:150px;"></div>
-            <div id="parameters"></div>
+            <div id="parameters" style="display:flex;"></div>
             <div id="stepbuttons"></div>
         </div>
     `
@@ -53,9 +53,14 @@ class StepView{
         })
 
         new DisableableButton(this.buttonContainer, 'save', 'btn btn-success',this.dirtiedEvent, () => {
-            saveStep(this.step,() => {
-                this.refreshrequest.trigger(0)
-            })
+            for(let parameter of this.step.parameters){
+                saveParameter(parameter,() => {
+                    saveStep(this.step, () => {
+                        this.refreshrequest.trigger(0)
+                    })
+                })
+            }
+            
         })
 
         new Button(this.buttonContainer, 'delete', 'btn btn-danger', () => {
