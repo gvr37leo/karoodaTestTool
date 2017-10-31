@@ -5,12 +5,14 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace karoodaTestToolServer.Steps {
     public class GenericSteps {
         IWebDriver driver;
+        bool assertionFailed = false;
 
         public GenericSteps(IWebDriver driver) {
             this.driver = driver;
@@ -39,7 +41,7 @@ namespace karoodaTestToolServer.Steps {
                         break;
                     }
                 case "assert": {
-                        Assert();
+                        Assert(paramDict["selector"].value, paramDict["value"].value);
                         break;
                     }
                 case "screenshot": {
@@ -79,13 +81,18 @@ namespace karoodaTestToolServer.Steps {
             driver.Navigate().GoToUrl(url);
         }
 
-        public void Assert() {
-
+        public void Assert(string selector, string value) {
+            IWebElement element = driver.FindElement(By.CssSelector(selector));
+            if(value != element.GetAttribute("value")) {
+                assertionFailed = true;
+            }
         }
 
         public void Screenshot() {
             OpenQA.Selenium.Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
-            ss.SaveAsFile($"screenshot:{DateTime.Now.ToShortDateString()}.png", ScreenshotImageFormat.Png);
+            //ss.SaveAsFile("C:/projects/karoodaTestTool/server/karoodaTestToolServer/screenshot.png", ScreenshotImageFormat.Png);
+            string path = $"{Directory.GetCurrentDirectory()}/seleniumscreenshots/screenshot{DateTime.Now.ToShortDateString()}.png";
+            ss.SaveAsFile(path, ScreenshotImageFormat.Png);
         }
 
         public void Scroll(string selector) {

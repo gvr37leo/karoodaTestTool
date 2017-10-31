@@ -1,6 +1,6 @@
 ﻿create table Testcase(
 	id int identity(1,1)	NOT NULL,
-	name varchar(255)		NOT NULL,
+	name varchar(255),
 	primary key(id)
 )
 

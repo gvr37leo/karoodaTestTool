@@ -12,7 +12,7 @@ class StepView{
         <div style="display:flex; align-items:center;">
             <div id="description" style="min-width:150px;"></div>
             <div id="parameters" style="display:flex;"></div>
-            <div id="stepbuttons"></div>
+            <div id="stepbuttons" style="margin-left: auto;"></div>
         </div>
     `
     constructor(element:HTMLElement, step:Step){
@@ -29,9 +29,10 @@ class StepView{
 
         getParameters({ filterEntrys: [{ field:"belongsToStep",value:`${this.step.id}`}] }, (stepParameters) => {
             this.step.parameters = stepParameters
-            for (let parameter of stepParameters) {
+            for (let parameter of this.step.parameters) {
                 let textWidget = new TextWidget(this.parameters)
                 textWidget.value.set(parameter.value)
+                textWidget.inputel.placeholder = parameter.name
                 textWidget.value.onchange.listen((val) => {
                     parameter.value = val;
                     this.dirtiedEvent.trigger(0)
@@ -56,7 +57,7 @@ class StepView{
             for(let parameter of this.step.parameters){
                 saveParameter(parameter,() => {
                     saveStep(this.step, () => {
-                        this.refreshrequest.trigger(0)
+                        // this.refreshrequest.trigger(0)
                     })
                 })
             }

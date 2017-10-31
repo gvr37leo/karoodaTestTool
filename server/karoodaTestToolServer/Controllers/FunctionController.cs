@@ -32,6 +32,8 @@ namespace karoodaTestToolServer.Controllers{
             });
 
             AddToDictionary("assert", "check if input contains value", new List<ParameterDef> {
+                new ParameterDef("selector",ParamType.text),
+                new ParameterDef("value",ParamType.text)
             });
 
             AddToDictionary("screenshot", "take a screenshot", new List<ParameterDef> {

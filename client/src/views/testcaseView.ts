@@ -71,6 +71,8 @@ class TestcaseView {
                 return val.description
             }, res)
 
+            dropdownWidget.input.placeholder = 'create new step'
+
             dropdownWidget.value.onchange.listen((val) => {
                 postStep(new Step(val.name,this.testcase.id),() => {
                     this.updateTable()

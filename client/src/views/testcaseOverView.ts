@@ -2,21 +2,47 @@
 
 
 class TestcaseOverView{
+    testcasecontainer: HTMLElement;
+    newtestcase: HTMLElement;
+    template:string = `
+        <div>
+            <div id="newtestcase" style="display:flex;"></div>
+            <div id="testcasecontainer"></div>
+        </div>
+    `
     element: HTMLElement;
 
     constructor(element: HTMLElement){
-        this.element = element
+        this.element = createAndAppend(element,this.template)
+        this.newtestcase = this.element.querySelector('#newtestcase') as HTMLElement
+        this.testcasecontainer = this.element.querySelector('#testcasecontainer') as HTMLElement
         
-        
-        getTestCases({filterEntrys:[]},(testCases:any[]) => {
-            for(let testCase of testCases){
-                new IndividualTestcaseView(this.element, testCase)
+        var newTestcaseNameWidget = new TextWidget(this.newtestcase)
+        newTestcaseNameWidget.inputel.placeholder = 'testcase name'
+        new Button(this.newtestcase,'create testcase','btn btn-success',() => {
+            postTestCase(new Testcase(0, newTestcaseNameWidget.value.get()),() => {
+                this.render()
+            })
+        })
+
+        this.render()
+    }
+
+    render(){
+        this.testcasecontainer.innerHTML = ''
+        getTestCases({ filterEntrys: [] }, (testCases: any[]) => {
+            for (let testCase of testCases) {
+                let testcaseview = new IndividualTestcaseView(this.testcasecontainer, testCase)
+                testcaseview.refreshRequest.listen(() => {
+                    this.render()
+                })
             }
         })
     }
 }
 
 class IndividualTestcaseView{
+    refreshRequest: EventSystem<any>;
     viewbuttons: HTMLElement;
     description: HTMLElement;
     testCase: Testcase;
@@ -24,7 +50,7 @@ class IndividualTestcaseView{
 
     template:string = `
         <div style="display:flex; align-items:center;" id="testcase-container">
-            <div id="description" style="min-width:150px;"></div>
+            <div id="description" style="min-width:250px;"></div>
             <div id="viewbuttons"></div>
         </div>
     `
@@ -33,7 +59,7 @@ class IndividualTestcaseView{
 
         this.element = createAndAppend(element,this.template) 
         this.testCase = testCase
-
+        this.refreshRequest = new EventSystem()
         this.description = this.element.querySelector('#description') as HTMLElement
         this.viewbuttons = this.element.querySelector('#viewbuttons') as HTMLElement
 
@@ -45,7 +71,7 @@ class IndividualTestcaseView{
 
         new Button(this.element,'delete','btn btn-danger',() => {
             deleteTestCase(this.testCase.id,() => {
-
+                this.refreshRequest.trigger(0)
             })
         })
     }

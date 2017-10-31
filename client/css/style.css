@@ -33,3 +33,7 @@ input{
 #parameters {
     min-width: 200px;
 }
+
+#parameters > *{
+    margin-right: 10px;
+}

@@ -1,4 +1,5 @@
-function mod(number, modulus) {
+function mod(number: number, modulus: number) {//% doesnt work with negative values
+    if(modulus == 0)return 0;//to prevent errors
     return ((number % modulus) + modulus) % modulus;
 }
 
