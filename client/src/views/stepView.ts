@@ -56,11 +56,12 @@ class StepView{
         new DisableableButton(this.buttonContainer, 'save', 'btn btn-success',this.dirtiedEvent, () => {
             for(let parameter of this.step.parameters){
                 saveParameter(parameter,() => {
-                    saveStep(this.step, () => {
-                        // this.refreshrequest.trigger(0)
-                    })
+                    
                 })
             }
+            saveStep(this.step, () => {
+               
+            })
             
         })
 
