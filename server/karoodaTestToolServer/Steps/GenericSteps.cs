@@ -91,7 +91,7 @@ namespace karoodaTestToolServer.Steps {
         public void Screenshot() {
             OpenQA.Selenium.Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
             //ss.SaveAsFile("C:/projects/karoodaTestTool/server/karoodaTestToolServer/screenshot.png", ScreenshotImageFormat.Png);
-            string path = $"{Directory.GetCurrentDirectory()}/seleniumscreenshots/screenshot{DateTime.Now.ToShortDateString()}.png";
+            string path = $"{Directory.GetCurrentDirectory()}/seleniumscreenshots/screenshot{DateTime.Now.ToString("yyyyMMddHHmmss")}.png";
             ss.SaveAsFile(path, ScreenshotImageFormat.Png);
         }
 
