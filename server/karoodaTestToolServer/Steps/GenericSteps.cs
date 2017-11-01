@@ -1,8 +1,10 @@
 ﻿using karoodaTestToolServer.Controllers;
+using karoodaTestToolServer.DAL;
 using karoodaTestToolServer.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -69,6 +71,8 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void Write(string selector, string text) {
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            //IWebElement element = wait.Until(driver => driver.FindElement(By.CssSelector(selector)));
             IWebElement element = driver.FindElement(By.CssSelector(selector));
             element.SendKeys(text);
         }
@@ -97,9 +101,17 @@ namespace karoodaTestToolServer.Steps {
 
         public void Scroll(string selector) {
             IWebElement element = driver.FindElement(By.CssSelector(selector));
-            Actions actions = new Actions(driver);
-            actions.MoveToElement(element);
-            actions.Perform();
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript("arguments[0].scrollIntoView()", element);
+        }
+
+        public void ExecuteJavascript(string javascript) {
+            IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
+            executor.ExecuteScript(javascript);
+        }
+
+        public void ExecuteTestcase(int testcaseid) {
+            new TestCaseDAL().Execute(testcaseid);
         }
     }
 }

@@ -24,27 +24,10 @@ namespace karoodaTestToolServer.Controllers{
         [HttpPost]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Execute(int id) {
-            IWebDriver driver = new ChromeDriver();
-            GenericSteps gensteps = new GenericSteps(driver);
 
-            Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToTestcase", $"{id}") });
-            StepDAL stepDAL = new StepDAL();
+            TestCaseDAL testcaseDAL = new TestCaseDAL();
+            testcaseDAL.Execute(id);
 
-            List<Step> steps = stepDAL.Get(filter);
-            foreach(Step step in steps) {
-
-                
-                Filter parameterFilter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToStep", $"{step.id}") });
-                ParameterDAL parameterDAL = new ParameterDAL();
-                List<ParameterDef> parameters = parameterDAL.Get(parameterFilter);
-                step.parameters = parameters;
-
-
-                gensteps.Call(step);
-            }
-
-
-            driver.Quit();
             return Ok();
         }
     }
