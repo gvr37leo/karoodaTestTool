@@ -2,6 +2,7 @@ class Step{
     id:number
     functionPointer:string
     belongsToTestcase:number
+    stepOrder:number
     parameters: StepParameter[] = []
 
     constructor(functionPointer: string,belongsToTestcase: number){

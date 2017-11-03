@@ -29,6 +29,7 @@ namespace karoodaTestToolServer.DAL {
             StepDAL stepDAL = new StepDAL();
 
             List<Step> steps = stepDAL.Get(filter);
+            steps.OrderBy(s => s.stepOrder);
             foreach (Step step in steps) {
 
 

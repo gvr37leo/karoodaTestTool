@@ -56,3 +56,13 @@ class EventSystem<T>{
         }
     }
 }
+
+class UpCall<T>{
+    response: EventSystem<T>;
+    request: EventSystem<T>;
+
+    constructor() {
+        this.request = new EventSystem<T>()
+        this.response = new EventSystem<T>()
+    }
+}

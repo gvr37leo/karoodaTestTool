@@ -19,6 +19,9 @@ namespace karoodaTestToolServer.Controllers {
         [HttpPost]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult PostStep(Step step) {
+             
+            step.stepOrder = DAL.Get(new Filter(new List<FilterEntry>() {new FilterEntry("belongsToTestcase", $"{step.belongsToTestcase}") })).Count;
+
 
             int newStepId = DAL.Insert(step);
             Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("id", $"{newStepId}") });

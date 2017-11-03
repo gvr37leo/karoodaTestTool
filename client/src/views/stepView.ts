@@ -1,4 +1,5 @@
 class StepView{
+    indexUpCall: UpCall<number>;
     refreshrequest: EventSystem<{}>;
     dirtiedEvent: EventSystem<any>;
     downrequest: EventSystem<number>;
@@ -45,27 +46,34 @@ class StepView{
         this.downrequest = new EventSystem();
         this.refreshrequest = new EventSystem()
 
-        new Button(this.buttonContainer, 'up','btn btn-default',() => {
+        this.indexUpCall = new UpCall()
+
+        new Button(this.buttonContainer, '<span class="glyphicon glyphicon-arrow-up"></span>','btn btn-default',() => {
             this.uprequest.trigger(0)
         })
 
-        new Button(this.buttonContainer, 'down', 'btn btn-default', () => {
+        new Button(this.buttonContainer, '<span class="glyphicon glyphicon-arrow-down"></span>', 'btn btn-default', () => {
             this.downrequest.trigger(0)
         })
 
-        new DisableableButton(this.buttonContainer, 'save', 'btn btn-success',this.dirtiedEvent, () => {
+        new DisableableButton(this.buttonContainer, '<span class="glyphicon glyphicon-floppy-disk"></span>', 'btn btn-success',this.dirtiedEvent, () => {
             for(let parameter of this.step.parameters){
                 saveParameter(parameter,() => {
                     
                 })
             }
-            saveStep(this.step, () => {
-               
+            this.indexUpCall.request.trigger(0)
+            this.indexUpCall.response.listen((val) => {
+                this.step.stepOrder = val
+                saveStep(this.step, () => {
+
+                })
             })
+            
             
         })
 
-        new Button(this.buttonContainer, 'delete', 'btn btn-danger', () => {
+        new Button(this.buttonContainer, '<span class="glyphicon glyphicon-trash"></span>', 'btn btn-danger', () => {
             deleteStep(this.step.id,() => {
                 this.refreshrequest.trigger(0)
             })

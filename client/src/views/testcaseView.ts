@@ -1,5 +1,5 @@
 /// <reference path="../ajaxCalls.ts" />
-/// <reference path="../gridControl.ts" />
+/// <reference path="../views/stepView.ts" />
 /// <reference path="../models/step.ts" />
 /// <reference path="../models/testcase.ts" />
 /// <reference path="../utils.ts" />
@@ -40,17 +40,17 @@ class TestcaseView {
         this.dirtiedEvent = new EventSystem()
 
         //up,save
-        new Button(this.buttonrow, 'up', 'btn btn-default', () => {
+            
+        new Button(this.buttonrow, '<span class="glyphicon glyphicon-arrow-left"></span>', 'btn btn-default', () => {
             window.location.hash = ''
         })
 
-        new DisableableButton(this.buttonrow, 'save', 'btn btn-success', this.dirtiedEvent, () => {
+        new DisableableButton(this.buttonrow, '<span class="glyphicon glyphicon-floppy-disk"></span>', 'btn btn-success', this.dirtiedEvent, () => {
             saveTestCase(this.testcase,() => {
 
             })
         })
-
-        new Button(this.buttonrow, 'execute','btn btn-primary',() => {
+        new Button(this.buttonrow, '<span class="glyphicon glyphicon-play"></span>','btn btn-primary',() => {
             executeTestCase(this.testcase.id,() => {
 
             })
@@ -93,11 +93,43 @@ class TestcaseView {
 
     updateTable(){
         this.stepstable.innerHTML = ''
-        getSteps({ filterEntrys: [{ field:"belongsToTestcase",value:`${this.testcase.id}`}] }, (steps) => {
-            var gridControl = new GridControl(this.stepstable, steps)
-            gridControl.refreshRequest.listen(() => {
-                this.updateTable()
-            })
+        getSteps({ filterEntrys: [{ field:"belongsToTestcase",value:`${this.testcase.id}`}] }, (steps:Step[]) => {
+
+            steps.sort((a,b) => a.stepOrder - b.stepOrder)
+
+            for(let i = 0; i < steps.length; i++){
+                let step = steps[i]
+                let stepview = new StepView(this.stepstable, step)
+                stepview.indexUpCall.request.listen(() => {
+                    stepview.indexUpCall.response.trigger(i)
+                })
+
+                stepview.uprequest.listen(() => {
+                    this.changeOrder(i,steps,-1)
+                })
+
+                stepview.downrequest.listen(() => {
+                    this.changeOrder(i, steps, 1)
+                })
+
+                stepview.refreshrequest.listen(() => {
+                    this.updateTable()
+                })
+            }
         })
     }
+
+    changeOrder(index:number, steps:Step[],orderChange:number){
+        var step = steps[index]
+        if (inRange(index + orderChange, 0, steps.length - 1)){
+            step.stepOrder = index + orderChange
+            saveStep(step, () => { })
+
+            steps[index + orderChange].stepOrder = index
+            saveStep(steps[index + orderChange],() => {
+                this.updateTable()
+            })
+        }
+    }
 }
+

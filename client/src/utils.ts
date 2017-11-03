@@ -15,3 +15,7 @@ function string2html(string): HTMLElement {
     return div.children[0] as HTMLElement;
 }
 
+function inRange(val: number, min: number, max: number){
+    return val <= max && val >= min;
+}
+
