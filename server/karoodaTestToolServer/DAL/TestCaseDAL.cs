@@ -38,8 +38,11 @@ namespace karoodaTestToolServer.DAL {
                 List<ParameterDef> parameters = parameterDAL.Get(parameterFilter);
                 step.parameters = parameters;
 
+                try {
+                    gensteps.Call(step);
+                } catch (Exception e) {
 
-                gensteps.Call(step);
+                }
             }
             driver.Quit();
         }

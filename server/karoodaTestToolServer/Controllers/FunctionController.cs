@@ -58,6 +58,9 @@ namespace karoodaTestToolServer.Controllers{
             AddToDictionary("screenshot", "take a screenshot", new List<ParameterDef> {
             });
 
+            AddToDictionary("wait", "wait for page load", new List<ParameterDef> {
+            });
+
             AddToDictionary("scroll", "scroll to element", new List<ParameterDef> {
                 new ParameterDef("selector",ParamType.text)
             });

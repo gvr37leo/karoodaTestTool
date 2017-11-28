@@ -20,7 +20,7 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void clickSave() {
-            genericSteps.Click("a.btn.btn-fit-height.green.submit-hulpaanvraag-form.disabled");
+            genericSteps.Click("#content > div > form > div.oudereheader > div > div > div.page-toolbar > div > a.btn.btn-fit-height.green.submit-oudere-form.disabled");
         }
 
         public void clickDelete() {

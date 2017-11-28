@@ -56,6 +56,10 @@ namespace karoodaTestToolServer.Steps {
                         Scroll(paramDict["selector"].value);
                         break;
                     }
+                case "wait": {
+                        Wait(1);
+                        break;
+                    }
                 case "ExecuteJavascript": {
                         ExecuteJavascript(paramDict["javascript"].value);
                         break;
@@ -152,6 +156,13 @@ namespace karoodaTestToolServer.Steps {
             IWebElement element = driver.FindElement(By.CssSelector(selector));
             IJavaScriptExecutor executor = (IJavaScriptExecutor)driver;
             executor.ExecuteScript("arguments[0].scrollIntoView()", element);
+        }
+
+        public void Wait(int delay) {
+            var now = DateTime.Now;
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(delay));
+            wait.PollingInterval = TimeSpan.FromSeconds(0.3);
+            wait.Until(wd => (DateTime.Now - now) - TimeSpan.FromMilliseconds(delay) > TimeSpan.Zero);
         }
 
         public void ExecuteJavascript(string javascript) {
