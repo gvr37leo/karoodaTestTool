@@ -31,13 +31,44 @@ class StepView{
         getParameters({ filterEntrys: [{ field:"belongsToStep",value:`${this.step.id}`}] }, (stepParameters) => {
             this.step.parameters = stepParameters
             for (let parameter of this.step.parameters) {
-                let textWidget = new TextWidget(this.parameters)
-                textWidget.value.set(parameter.value)
-                textWidget.inputel.placeholder = parameter.name
-                textWidget.value.onchange.listen((val) => {
-                    parameter.value = val;
-                    this.dirtiedEvent.trigger(0)
-                })
+                var widget:Widget<any>;
+                var input:HTMLInputElement
+                if(parameter.type == ParamType.entity){
+                    var tables = getTables()
+                    var dropdownWidget = new DropDownWidget(this.parameters, 'dropdown', (e) => {
+                        if(e){
+                            return e.FriendlyName
+                        }else{
+                            return ''
+                        }
+                    }, tables)
+                    input = dropdownWidget.input
+                    widget = dropdownWidget
+
+                    dropdownWidget.value.onchange.listen((val) => {
+                        if(val){
+                            parameter.value = val.FriendlyName    
+                        }else{
+                            parameter.value = val   
+                        }
+                        this.dirtiedEvent.trigger(0)
+                    })
+
+                }else{//default to text widget
+                    var textWidget = new TextWidget(this.parameters)
+                    input = textWidget.inputel
+                    widget = textWidget
+
+                    textWidget.value.onchange.listen((val) => {
+                        parameter.value = val;
+                        this.dirtiedEvent.trigger(0)
+                    })
+                }
+                input.placeholder = parameter.name
+                input.value = parameter.value
+                
+
+                
             }
         })
         

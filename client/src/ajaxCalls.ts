@@ -175,3 +175,116 @@ function getFunctionDefinitions(callback: (data: any[]) => void){
         callback(res)
     })
 }
+
+function getTables(){
+    // https://editorcontrol-projectpaul2-stageheda-stages.karooda.io/api/form/page
+    var res = [
+        {
+            "Name": "oudere",
+            "FriendlyName": "oudere",
+            "Table": {
+                "Name": "oudere"
+            }
+        },
+        {
+            "Name": "vrijwilliger",
+            "FriendlyName": "vrijwilliger",
+            "Table": {
+                "Name": "vrijwilliger"
+            }
+        },
+        {
+            "Name": "hulpaanvraag",
+            "FriendlyName": "hulpaanvraag",
+            "Table": {
+                "Name": "hulpaanvraag"
+            }
+        },
+        {
+            "Name": "displaylanguage",
+            "FriendlyName": "displaylanguage",
+            "Table": {
+                "Name": "DisplayLanguage"
+            }
+        },
+        {
+            "Name": "users",
+            "FriendlyName": "users",
+            "Table": {
+                "Name": "Users"
+            }
+        },
+        {
+            "Name": "roles",
+            "FriendlyName": "roles",
+            "Table": {
+                "Name": "Roles"
+            }
+        },
+        {
+            "Name": "userroles",
+            "FriendlyName": "userroles",
+            "Table": {
+                "Name": "UserRoles"
+            }
+        }
+    ]
+    return res
+}
+
+function getColumns(){
+    // https://editorcontrol-projectpaul2-stageheda-stages.karooda.io/api/form/page/fields?page=oudere&_=1511777139582
+    var res = [
+        {
+            "FieldName": "naar_HulpaanvraagHeeftOudere_oudere",
+            "ControlType": "LegacyGrid",
+            "Caption": "HulpaanvraagHeeftOudere_oudere",
+            "FieldType": "DBChildGridField",
+            "DataType": null,
+            "FkTable": "oudere",
+            "FkPkColumn": "OudereHasOudere_id",
+            "IsMandatory": null
+        },
+        {
+            "FieldName": "OudereHasOudere_id",
+            "ControlType": "AutoNumber",
+            "Caption": "ouderehasoudere_id",
+            "FieldType": "DBField",
+            "DataType": "int",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true
+        },
+        {
+            "FieldName": "OudereHeeftAdres",
+            "ControlType": "Textbox",
+            "Caption": "adres",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": false
+        },
+        {
+            "FieldName": "OudereHeeftNaam",
+            "ControlType": "Textbox",
+            "Caption": "naam",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": false
+        },
+        {
+            "FieldName": "OudereHeeftTelefoonnummer",
+            "ControlType": "Textbox",
+            "Caption": "telefoonnummer",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": false
+        }
+    ]
+    return res
+}

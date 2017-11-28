@@ -15,6 +15,25 @@ namespace karoodaTestToolServer.Controllers{
 
         public FunctionController() {
 
+            //karooda steps--------------------------------------------------------------------------
+            AddToDictionary("goToTab", "go to tab", new List<ParameterDef> {
+                new ParameterDef("entity",ParamType.entity)
+            });
+
+            AddToDictionary("goToDetail", "go to detail page", new List<ParameterDef> {
+                new ParameterDef("entity",ParamType.entity),
+                new ParameterDef("id",ParamType.number)
+            });
+
+            AddToDictionary("clickSave", "click on save", new List<ParameterDef> {
+            });
+
+            AddToDictionary("clickDelete", "click on delete", new List<ParameterDef> {
+            });
+
+
+
+            //general steps-------------------------------------------------------------------------
             AddToDictionary("click", "click on element",new List<ParameterDef> {
                 new ParameterDef("selector",ParamType.text)
             });

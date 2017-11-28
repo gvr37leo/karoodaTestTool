@@ -22,3 +22,11 @@ create table Parameter(
 	foreign key (belongsToStep) references  Step(id) ON DELETE CASCADE
 	primary key(id)
 )
+
+create table Result(
+	id int identity(1,1)			NOT NULL,
+	startDate int NOT NULL,
+	result varchar(255)				NOT NULL
+	foreign key (belongsToTestcase) references  Testcase(id) ON DELETE CASCADE
+	primary key(id)
+)

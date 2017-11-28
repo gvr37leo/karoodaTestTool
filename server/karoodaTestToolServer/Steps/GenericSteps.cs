@@ -15,9 +15,11 @@ namespace karoodaTestToolServer.Steps {
     public class GenericSteps {
         IWebDriver driver;
         bool assertionFailed = false;
+        public KaroodaSteps karoodaSteps;
 
         public GenericSteps(IWebDriver driver) {
             this.driver = driver;
+            karoodaSteps = new KaroodaSteps(this);
         }
 
         public void Call(Step step) {
@@ -54,6 +56,53 @@ namespace karoodaTestToolServer.Steps {
                         Scroll(paramDict["selector"].value);
                         break;
                     }
+                case "ExecuteJavascript": {
+                        ExecuteJavascript(paramDict["javascript"].value);
+                        break;
+                    }
+                case "ExecuteTestcase": {
+                        int id;
+                        if(int.TryParse(paramDict["testcaseid"].value,out id)){
+                            ExecuteTestcase(id);
+                        }
+                        break;
+                    }
+
+                    //karoodasteps -------------------------------
+                case "goToTab": {
+                        karoodaSteps.goToTab(paramDict["entity"].value);
+                        break;
+                    }
+
+                case "goToDetail": {
+                        karoodaSteps.goToDetail(paramDict["entity"].value, paramDict["id"].value);
+                        break;
+                    }
+                case "clickSave": {
+                        karoodaSteps.clickSave();
+                        break;
+                    }
+                case "clickDelete": {
+                        karoodaSteps.clickDelete();
+                        break;
+                    }
+
+
+
+
+                //            public void goToTab(string entity) {
+                //    genericSteps.GoToURL($"https://projectpaul2-stageheda-stages.karooda.io/#{entity}");
+                //}
+
+                //public void goToDetail(string entity, string id) {
+                //    genericSteps.GoToURL($"https://projectpaul2-stageheda-stages.karooda.io/#{entity}/{id}");
+                //}
+
+                //public void clickSave() {
+                //    genericSteps.Click("a.btn.btn-fit-height.green.submit-hulpaanvraag-form.disabled");
+                //}
+
+                //public void clickDelete() {
                 default: {
                         //maybe throw error
                         break;
