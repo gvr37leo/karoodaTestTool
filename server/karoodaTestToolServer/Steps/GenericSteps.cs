@@ -162,7 +162,7 @@ namespace karoodaTestToolServer.Steps {
             var now = DateTime.Now;
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(delay));
             wait.PollingInterval = TimeSpan.FromSeconds(0.3);
-            wait.Until(wd => (DateTime.Now - now) - TimeSpan.FromMilliseconds(delay) > TimeSpan.Zero);
+            wait.Until(wd => (DateTime.Now - now) - TimeSpan.FromSeconds(delay) > TimeSpan.Zero);
         }
 
         public void ExecuteJavascript(string javascript) {
