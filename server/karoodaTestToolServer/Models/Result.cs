@@ -11,6 +11,10 @@ namespace karoodaTestToolServer.Models {
         public int startDate;
         public string result;
 
+        public Result() {
+
+        }
+
         public Result(int belongsToTestcase, int startDate,string result) {
             this.startDate = startDate;
             this.result = result;

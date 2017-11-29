@@ -14,7 +14,7 @@ class ResultsOverView{
         this.element = createAndAppend(element, this.template)
         
         getResults((data) => {
-            
+            console.log(data)
         })
 
     }
