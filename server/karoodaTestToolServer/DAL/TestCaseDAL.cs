@@ -20,11 +20,8 @@ namespace karoodaTestToolServer.DAL {
             };
         }
 
-        public void Execute(int id) {
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+        public void Execute(int id, IWebDriver driver) {
             GenericSteps gensteps = new GenericSteps(driver);
-
             Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToTestcase", $"{id}") });
             StepDAL stepDAL = new StepDAL();
 
@@ -44,7 +41,7 @@ namespace karoodaTestToolServer.DAL {
 
                 }
             }
-            driver.Quit();
+            
         }
     }
 }

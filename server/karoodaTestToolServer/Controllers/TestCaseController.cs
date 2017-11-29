@@ -16,6 +16,7 @@ using karoodaTestToolServer.DAL;
 namespace karoodaTestToolServer.Controllers{
 
     public class TestCaseController : AbstractController<TestCase> {
+
         [ApiExplorerSettings(IgnoreApi = true)]
         public override AbstractDAL<TestCase> DALRetriever() {
             return new TestCaseDAL();
@@ -25,9 +26,15 @@ namespace karoodaTestToolServer.Controllers{
         [EnableCors(origins: "*", headers: "*", methods: "*")]
         public IHttpActionResult Execute(int id) {
 
-            TestCaseDAL testcaseDAL = new TestCaseDAL();
-            testcaseDAL.Execute(id);
+            IWebDriver driver = new ChromeDriver();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
+            TestCaseDAL testcaseDAL = new TestCaseDAL();
+            testcaseDAL.Execute(id,driver);
+            driver.Quit();
+
+            ResultDAL resultDAL = new ResultDAL();
+            resultDAL.Insert(new Result(id, (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, "all ok"));
             return Ok();
         }
     }

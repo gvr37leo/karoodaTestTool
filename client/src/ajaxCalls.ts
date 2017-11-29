@@ -176,6 +176,12 @@ function getFunctionDefinitions(callback: (data: any[]) => void){
     })
 }
 
+function getResults(callback: (data: any[]) => void){
+    get('Result',new Filter(),(data) => {
+        callback(data)
+    })
+}
+
 function getTables(){
     // https://editorcontrol-projectpaul2-stageheda-stages.karooda.io/api/form/page
     var res = [

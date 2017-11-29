@@ -145,10 +145,12 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\ParameterController.cs" />
+    <Compile Include="Controllers\ResultController.cs" />
     <Compile Include="Controllers\StepController.cs" />
     <Compile Include="Controllers\TestCaseController.cs" />
     <Compile Include="DAL\AbstractDAL.cs" />
     <Compile Include="DAL\ParameterDAL.cs" />
+    <Compile Include="DAL\ResultDAL.cs" />
     <Compile Include="DAL\StepDAL.cs" />
     <Compile Include="DAL\TestCaseDAL.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,6 +158,7 @@
     </Compile>
     <Compile Include="Models\ParameterDef.cs" />
     <Compile Include="Models\FunctionDef.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Step.cs" />
     <Compile Include="Models\TestCase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

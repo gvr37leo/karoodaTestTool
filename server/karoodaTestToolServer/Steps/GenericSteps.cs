@@ -171,7 +171,7 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void ExecuteTestcase(int testcaseid) {
-            new TestCaseDAL().Execute(testcaseid);
+            new TestCaseDAL().Execute(testcaseid,driver);
         }
     }
 }

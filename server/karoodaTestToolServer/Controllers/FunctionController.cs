@@ -64,6 +64,9 @@ namespace karoodaTestToolServer.Controllers{
             AddToDictionary("scroll", "scroll to element", new List<ParameterDef> {
                 new ParameterDef("selector",ParamType.text)
             });
+            AddToDictionary("ExecuteTestcase", "execute a testcase", new List<ParameterDef> {
+                new ParameterDef("testcaseid",ParamType.number)
+            });
         }
 
         private void AddToDictionary(string key, string description, List<ParameterDef> parameters) {

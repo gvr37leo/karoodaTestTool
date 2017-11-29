@@ -2,6 +2,7 @@
 /// <reference path="views/testcaseView.ts" />
 /// <reference path="pathfinder.ts" />
 /// <reference path="views/testcaseOverView.ts" />
+/// <reference path="views/resultsOverView.ts" />
 
 
 class TestTool{
@@ -19,13 +20,17 @@ class TestTool{
             new TestcaseOverView(this.element)
         })
 
+        pathFinder.register("result", (params) => {
+            this.element.innerHTML = ''
+            new ResultsOverView(this.element)
+        })
+
         pathFinder.register(":id", (params) => {
             this.element.innerHTML = ''
             getTestCases({filterEntrys:[{field:"id",value:`${params[0]}`}]},(testcases) => {
                 new TestcaseView(this.element, testcases[0])
             })
         })
-
 
         pathFinder.trigger(this.removeHash(location.hash))
         window.addEventListener("hashchange", (e: HashChangeEvent) => {
