@@ -26,7 +26,8 @@ create table Parameter(
 create table Result(
 	id int identity(1,1)			NOT NULL,
 	startDate int NOT NULL,
-	result varchar(255)				NOT NULL
+	result varchar(8000)				NOT NULL,
+	successfull bit
 	foreign key (belongsToTestcase) references  Testcase(id) ON DELETE CASCADE
 	primary key(id)
 )

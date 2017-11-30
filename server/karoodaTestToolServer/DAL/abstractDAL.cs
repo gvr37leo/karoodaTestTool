@@ -7,7 +7,8 @@ using System.Web;
 
 namespace karoodaTestToolServer.DAL {
     public enum DataType {
-        number, text
+        number, text,
+        boolean
     }
 
     public interface IToDynamicObject {
@@ -55,7 +56,8 @@ namespace karoodaTestToolServer.DAL {
             Dictionary<string, Column> columns = getColumns().ToDictionary(p => p.name);
 
             if (filter.filterEntrys.Count() == 0) {
-                return _sqlUtils.Query<T>($"SELECT * FROM {getTableName()}").ToList();
+                var stuff = _sqlUtils.Query<T>($"SELECT * FROM {getTableName()}").ToList();
+                return stuff;
             } else {//errors when all fields are invalid
                 string query = $"SELECT * FROM {getTableName()} WHERE ";
                 List<string> filterValues = new List<string>();
@@ -65,6 +67,7 @@ namespace karoodaTestToolServer.DAL {
                         filterValues.Add($"{filterEntry.field}={filterEntry.value}");//sql injection: filterentry.value comes from client
                     } else if (columns.ContainsKey(filterEntry.field)) {
                         switch (columns[filterEntry.field].dataType) {
+                            case DataType.boolean:
                             case DataType.number: {
                                     filterValues.Add($"{filterEntry.field}={filterEntry.value}");
                                     break;

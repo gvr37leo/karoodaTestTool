@@ -20,8 +20,8 @@ namespace karoodaTestToolServer.DAL {
             };
         }
 
-        public void Execute(int id, IWebDriver driver) {
-            GenericSteps gensteps = new GenericSteps(driver);
+        public void Execute(int id, IWebDriver driver,Result result) {
+            GenericSteps gensteps = new GenericSteps(driver, result);
             Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToTestcase", $"{id}") });
             StepDAL stepDAL = new StepDAL();
 
@@ -38,7 +38,8 @@ namespace karoodaTestToolServer.DAL {
                 try {
                     gensteps.Call(step);
                 } catch (Exception e) {
-
+                    result.successfull = false;
+                    result.result += e.Message + '\n';
                 }
             }
             

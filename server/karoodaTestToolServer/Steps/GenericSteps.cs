@@ -14,11 +14,12 @@ using System.Web;
 namespace karoodaTestToolServer.Steps {
     public class GenericSteps {
         IWebDriver driver;
-        bool assertionFailed = false;
         public KaroodaSteps karoodaSteps;
+        private Result result;
 
-        public GenericSteps(IWebDriver driver) {
+        public GenericSteps(IWebDriver driver,Result result) {
             this.driver = driver;
+            this.result = result;
             karoodaSteps = new KaroodaSteps(this);
         }
 
@@ -141,7 +142,8 @@ namespace karoodaTestToolServer.Steps {
         public void Assert(string selector, string value) {
             IWebElement element = driver.FindElement(By.CssSelector(selector));
             if(value != element.GetAttribute("value")) {
-                assertionFailed = true;
+                result.successfull = false;
+                result.result += $"element with selector {selector}: expected ${value} but actueal value was: ${element.GetAttribute("value")}\n";
             }
         }
 
@@ -171,7 +173,7 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void ExecuteTestcase(int testcaseid) {
-            new TestCaseDAL().Execute(testcaseid,driver);
+            new TestCaseDAL().Execute(testcaseid,driver,result);
         }
     }
 }

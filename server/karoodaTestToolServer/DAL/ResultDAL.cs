@@ -12,6 +12,7 @@ namespace karoodaTestToolServer.DAL {
                 new Column("startDate",DataType.number),
                 new Column("result", DataType.text),
                 new Column("belongsToTestcase", DataType.number),
+                new Column("successfull",DataType.boolean)
             };
         }
 

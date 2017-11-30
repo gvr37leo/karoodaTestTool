@@ -19,7 +19,9 @@ class TestcaseOverView{
         
         var newTestcaseNameWidget = new TextWidget(this.newtestcase)
         newTestcaseNameWidget.inputel.placeholder = 'testcase name'
-        new Button(this.newtestcase,'create testcase','btn btn-success',() => {
+        newTestcaseNameWidget.inputel.classList.add('leftgroup')
+
+        new Button(this.newtestcase, 'create testcase','btn btn-success rightgroup',() => {
             postTestCase(new Testcase(0, newTestcaseNameWidget.value.get()),() => {
                 this.render()
             })

@@ -28,13 +28,14 @@ namespace karoodaTestToolServer.Controllers{
 
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            Result result = new Result(id, (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, true);
 
             TestCaseDAL testcaseDAL = new TestCaseDAL();
-            testcaseDAL.Execute(id,driver);
+            testcaseDAL.Execute(id,driver,result);
             driver.Quit();
 
             ResultDAL resultDAL = new ResultDAL();
-            resultDAL.Insert(new Result(id, (int)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds, "all ok"));
+            resultDAL.Insert(result);
             return Ok();
         }
     }
