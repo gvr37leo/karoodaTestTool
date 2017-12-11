@@ -27,45 +27,58 @@ class StepView{
 
         this.description.innerHTML = this.step.functionPointer
         // createAndAppend(this.description, `<p>${this.step.functionPointer}</p>`)
-
+        function updateinputelement(input:HTMLInputElement,placeholder,value){
+            input.placeholder = placeholder
+            input.value = value
+        }
         getParameters({ filterEntrys: [{ field:"belongsToStep",value:`${this.step.id}`}] }, (stepParameters) => {
             this.step.parameters = stepParameters
             for (let parameter of this.step.parameters) {
-                var widget:Widget<any>;
-                var input:HTMLInputElement
                 if(parameter.type == ParamType.entity){
-                    var tables = getTables()
-                    var dropdownWidget = new DropDownWidget(this.parameters, 'dropdown', (e) => {
-                        if(e){
-                            return e.FriendlyName
-                        }else{
-                            return ''
-                        }
-                    }, tables)
-                    input = dropdownWidget.input
-                    widget = dropdownWidget
+                    getTables((tables) => {
+                        var dropdownWidget = new DropDownWidget(this.parameters, 'dropdown', (e) => {
+                            if (e) {
+                                return e.Table.Name
+                            } else {
+                                return ''
+                            }
+                        }, tables)
+                        updateinputelement(dropdownWidget.input, parameter.name, parameter.value)
 
-                    dropdownWidget.value.onchange.listen((val) => {
-                        if(val){
-                            parameter.value = val.FriendlyName    
-                        }else{
-                            parameter.value = val   
-                        }
-                        this.dirtiedEvent.trigger(0)
+
+                        dropdownWidget.value.onchange.listen((val) => {
+                            if (val) {
+                                parameter.value = val.Table.Name
+                            } else {
+                                parameter.value = val
+                            }
+                            this.dirtiedEvent.trigger(0)
+                        })
                     })
+                }else if(parameter.type == ParamType.column){
+                    getColumns((columns) => {
+                        var fieldnamegetter = (e) => {
+                            return e.FieldName
+                        }
+                        var columnWidget = new DropDownWidget(this.parameters, 'dropdown', fieldnamegetter, columns)
+                        updateinputelement(columnWidget.input, parameter.name, parameter.value)
 
-                }else{//default to text widget
+                        columnWidget.value.onchange.listen((val) => {
+                            parameter.value = fieldnamegetter(val)
+                            this.dirtiedEvent.trigger(0)
+                        })
+                    }) 
+                }
+                else{//default to text widget
                     var textWidget = new TextWidget(this.parameters)
-                    input = textWidget.inputel
-                    widget = textWidget
+                    updateinputelement(textWidget.inputel, parameter.name, parameter.value)
 
                     textWidget.value.onchange.listen((val) => {
                         parameter.value = val;
                         this.dirtiedEvent.trigger(0)
                     })
                 }
-                input.placeholder = parameter.name
-                input.value = parameter.value
+                
                 
 
                 

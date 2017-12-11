@@ -10,8 +10,8 @@ class ResultsOverView{
                 <thead>
                     <tr>
                         <th>Start date</th>
-                        <th>result</th> 
-                        <th>testcase</th>
+                        <th>Result</th> 
+                        <th>Testcase</th>
                     </tr>
                 </thead>
                 <tbody id="resultcontainer" >

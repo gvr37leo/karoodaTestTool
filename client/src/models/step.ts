@@ -19,4 +19,4 @@ class StepParameter{
     belongsToStep:number;
 }
 
-enum ParamType { text, number, pointer,entity }
+enum ParamType { text, number, pointer,entity,column }

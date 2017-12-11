@@ -164,7 +164,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="sql\sqlcreatedb.sql" />
     <Compile Include="Steps\GenericSteps.cs" />
-    <Compile Include="Steps\GorillaSteps.cs" />
     <Compile Include="Steps\KaroodaSteps.cs" />
   </ItemGroup>
   <ItemGroup>

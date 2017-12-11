@@ -31,7 +31,15 @@ namespace karoodaTestToolServer.Controllers{
             AddToDictionary("clickDelete", "click on delete", new List<ParameterDef> {
             });
 
+            AddToDictionary("assertField", "check if a certain field has a value", new List<ParameterDef> {
+                new ParameterDef("field",ParamType.column),
+                new ParameterDef("expected",ParamType.text)
+            });
 
+            AddToDictionary("writeField", "write a value in a certain field", new List<ParameterDef> {
+                new ParameterDef("field",ParamType.column),
+                new ParameterDef("value",ParamType.text)
+            });
 
             //general steps-------------------------------------------------------------------------
             AddToDictionary("click", "click on element",new List<ParameterDef> {

@@ -182,115 +182,191 @@ function getResults(callback: (data: any[]) => void){
     })
 }
 
-function getTables(){
+function getTables(callback: (data: any[]) => void){
     // https://editorcontrol-projectpaul2-stageheda-stages.karooda.io/api/form/page
     var res = [
         {
-            "Name": "oudere",
-            "FriendlyName": "oudere",
+            "Name": "persoon",
+            "FriendlyName": "persoon",
             "Table": {
-                "Name": "oudere"
+                "Name": "Persoon"
             }
         },
         {
-            "Name": "vrijwilliger",
-            "FriendlyName": "vrijwilliger",
+            "Name": "trip",
+            "FriendlyName": "trip",
             "Table": {
-                "Name": "vrijwilliger"
+                "Name": "Trip"
             }
         },
         {
-            "Name": "hulpaanvraag",
-            "FriendlyName": "hulpaanvraag",
+            "Name": "bestemming",
+            "FriendlyName": "bestemming",
             "Table": {
-                "Name": "hulpaanvraag"
-            }
-        },
-        {
-            "Name": "displaylanguage",
-            "FriendlyName": "displaylanguage",
-            "Table": {
-                "Name": "DisplayLanguage"
-            }
-        },
-        {
-            "Name": "users",
-            "FriendlyName": "users",
-            "Table": {
-                "Name": "Users"
-            }
-        },
-        {
-            "Name": "roles",
-            "FriendlyName": "roles",
-            "Table": {
-                "Name": "Roles"
-            }
-        },
-        {
-            "Name": "userroles",
-            "FriendlyName": "userroles",
-            "Table": {
-                "Name": "UserRoles"
+                "Name": "Bestemming"
             }
         }
     ]
-    return res
+    callback(res)
 }
 
-function getColumns(){
-    // https://editorcontrol-projectpaul2-stageheda-stages.karooda.io/api/form/page/fields?page=oudere&_=1511777139582
-    var res = [
+function getColumns(callback: (data: any[]) => void){
+    callback([
         {
-            "FieldName": "naar_HulpaanvraagHeeftOudere_oudere",
-            "ControlType": "LegacyGrid",
-            "Caption": "HulpaanvraagHeeftOudere_oudere",
-            "FieldType": "DBChildGridField",
-            "DataType": null,
-            "FkTable": "oudere",
-            "FkPkColumn": "OudereHasOudere_id",
-            "IsMandatory": null
-        },
-        {
-            "FieldName": "OudereHasOudere_id",
+            "FieldName": "PersoonHasPersoon_id",
             "ControlType": "AutoNumber",
-            "Caption": "ouderehasoudere_id",
+            "Caption": "persoonhaspersoon_id",
             "FieldType": "DBField",
             "DataType": "int",
             "FkTable": null,
             "FkPkColumn": null,
-            "IsMandatory": true
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": "Integer"
         },
         {
-            "FieldName": "OudereHeeftAdres",
+            "FieldName": "PersoonHeeftAchternaam",
             "ControlType": "Textbox",
-            "Caption": "adres",
+            "Caption": "persoonheeftachternaam",
             "FieldType": "DBField",
             "DataType": "varchar",
             "FkTable": null,
             "FkPkColumn": null,
-            "IsMandatory": false
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
         },
         {
-            "FieldName": "OudereHeeftNaam",
+            "FieldName": "PersoonHeeftTussenVoegsels",
             "ControlType": "Textbox",
-            "Caption": "naam",
+            "Caption": "persoonheefttussenvoegsels",
             "FieldType": "DBField",
             "DataType": "varchar",
             "FkTable": null,
             "FkPkColumn": null,
-            "IsMandatory": false
+            "IsMandatory": false,
+            "DatatableInfo": null,
+            "Format": ""
         },
         {
-            "FieldName": "OudereHeeftTelefoonnummer",
+            "FieldName": "PersoonHeeftVoornaam",
             "ControlType": "Textbox",
-            "Caption": "telefoonnummer",
+            "Caption": "persoonheeftvoornaam",
             "FieldType": "DBField",
             "DataType": "varchar",
             "FkTable": null,
             "FkPkColumn": null,
-            "IsMandatory": false
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "TripHasTrip_id",
+            "ControlType": "AutoNumber",
+            "Caption": "triphastrip_id",
+            "FieldType": "DBField",
+            "DataType": "int",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": "Integer"
+        },
+        {
+            "FieldName": "TripHeeftEenATitel",
+            "ControlType": "Textbox",
+            "Caption": "tripheefteenatitel",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "TripHeeftEenBTitel",
+            "ControlType": "Textbox",
+            "Caption": "tripheefteenbtitel",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "TripHeeftEenTitel",
+            "ControlType": "Textbox",
+            "Caption": "tripheefteentitel",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "TripHeeftOmschrijving",
+            "ControlType": "Textarea",
+            "Caption": "tripheeftomschrijving",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": false,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "van_TripGaatNaarBestemming_Bestemming",
+            "ControlType": "ForeignKey",
+            "Caption": "TripGaatNaarBestemming_Bestemming",
+            "FieldType": "DBFKField",
+            "DataType": null,
+            "FkTable": "Bestemming",
+            "FkPkColumn": "BestemmingHasBestemming_id",
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "van_TripWordtGeleidtDoorPersoon_Persoon",
+            "ControlType": "ForeignKey",
+            "Caption": "TripWordtGeleidtDoorPersoon_Persoon",
+            "FieldType": "DBFKField",
+            "DataType": null,
+            "FkTable": "Persoon",
+            "FkPkColumn": "PersoonHasPersoon_id",
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
+        },
+        {
+            "FieldName": "BestemmingHasBestemming_id",
+            "ControlType": "AutoNumber",
+            "Caption": "bestemminghasbestemming_id",
+            "FieldType": "DBField",
+            "DataType": "int",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": "Integer"
+        },
+        {
+            "FieldName": "BestemmingHeeftTitel",
+            "ControlType": "Textbox",
+            "Caption": "bestemmingheefttitel",
+            "FieldType": "DBField",
+            "DataType": "varchar",
+            "FkTable": null,
+            "FkPkColumn": null,
+            "IsMandatory": true,
+            "DatatableInfo": null,
+            "Format": ""
         }
-    ]
-    return res
+    ])
 }

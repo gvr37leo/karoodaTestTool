@@ -41,5 +41,5 @@ namespace karoodaTestToolServer.Models {
         }
     }
 
-    public enum ParamType { text, number, pointer, entity }
+    public enum ParamType { text, number, pointer, entity, column }
 }

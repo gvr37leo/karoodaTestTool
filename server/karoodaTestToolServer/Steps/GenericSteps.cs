@@ -13,9 +13,9 @@ using System.Web;
 
 namespace karoodaTestToolServer.Steps {
     public class GenericSteps {
-        IWebDriver driver;
+        public IWebDriver driver;
         public KaroodaSteps karoodaSteps;
-        private Result result;
+        public Result result;
 
         public GenericSteps(IWebDriver driver,Result result) {
             this.driver = driver;
@@ -91,23 +91,14 @@ namespace karoodaTestToolServer.Steps {
                         karoodaSteps.clickDelete();
                         break;
                     }
-
-
-
-
-                //            public void goToTab(string entity) {
-                //    genericSteps.GoToURL($"https://projectpaul2-stageheda-stages.karooda.io/#{entity}");
-                //}
-
-                //public void goToDetail(string entity, string id) {
-                //    genericSteps.GoToURL($"https://projectpaul2-stageheda-stages.karooda.io/#{entity}/{id}");
-                //}
-
-                //public void clickSave() {
-                //    genericSteps.Click("a.btn.btn-fit-height.green.submit-hulpaanvraag-form.disabled");
-                //}
-
-                //public void clickDelete() {
+                case "assertField": {
+                        karoodaSteps.assertField(paramDict["field"].value, paramDict["expected"].value);
+                        break;
+                    }
+                case "writeField": {
+                        karoodaSteps.writeField(paramDict["field"].value, paramDict["value"].value);
+                        break;
+                    }
                 default: {
                         //maybe throw error
                         break;
@@ -143,7 +134,9 @@ namespace karoodaTestToolServer.Steps {
             IWebElement element = driver.FindElement(By.CssSelector(selector));
             if(value != element.GetAttribute("value")) {
                 result.successfull = false;
-                result.result += $"element with selector {selector}: expected ${value} but actueal value was: ${element.GetAttribute("value")}\n";
+                result.result += $"checking element with selector {selector}\n expected \"{value}\" but the element's actual value was: \"{element.GetAttribute("value")}\"\n";
+            }else {
+                result.result += $"checking element with selector {selector}\n expected \"{value}\" was correct\n";
             }
         }
 
@@ -160,7 +153,7 @@ namespace karoodaTestToolServer.Steps {
             executor.ExecuteScript("arguments[0].scrollIntoView()", element);
         }
 
-        public void Wait(int delay) {
+        public void Wait(double delay) {
             var now = DateTime.Now;
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(delay));
             wait.PollingInterval = TimeSpan.FromSeconds(0.3);
