@@ -39,7 +39,6 @@ namespace karoodaTestToolServer.DAL {
                     gensteps.Call(step);
                     gensteps.Wait(0.5);
                 } catch (Exception e) {
-                    gensteps.Screenshot();
                     result.successfull = false;
                     result.result += e.Message + '\n';
                 }

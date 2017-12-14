@@ -7,7 +7,6 @@
 
 class TestTool{
     element:HTMLElement
-    temple:string = ``
 
 
     constructor(element:HTMLElement){

@@ -1,10 +1,10 @@
 /// <reference path="models/step.ts" />
 
-class Filter{
-    filterEntrys:FilterEntry[] = []
+interface Filter{
+    filterEntrys:FilterEntry[]
 }
 
-class FilterEntry{
+interface FilterEntry{
     field:string
     value:string
 }
@@ -177,7 +177,7 @@ function getFunctionDefinitions(callback: (data: any[]) => void){
 }
 
 function getResults(callback: (data: any[]) => void){
-    get('Result',new Filter(),(data) => {
+    get('Result',{filterEntrys:[]},(data) => {
         callback(data)
     })
 }
