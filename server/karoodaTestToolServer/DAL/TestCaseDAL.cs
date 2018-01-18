@@ -20,21 +20,24 @@ namespace karoodaTestToolServer.DAL {
             };
         }
 
-        public void Execute(int id, IWebDriver driver,Result result) {
-            GenericSteps gensteps = new GenericSteps(driver, result);
+        public void Execute(int id, IWebDriver driver,Result result) {     
             Filter filter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToTestcase", $"{id}") });
             StepDAL stepDAL = new StepDAL();
-
             List<Step> steps = stepDAL.Get(filter);
-            steps = steps.OrderBy(s => s.stepOrder).ToList();
             foreach (Step step in steps) {
-
-
                 Filter parameterFilter = new Filter(new List<FilterEntry>() { new FilterEntry("belongsToStep", $"{step.id}") });
                 ParameterDAL parameterDAL = new ParameterDAL();
                 List<ParameterDef> parameters = parameterDAL.Get(parameterFilter);
                 step.parameters = parameters;
+            }
 
+            ExecuteSteps(steps,driver,result);
+        }
+
+        public void ExecuteSteps(List<Step> steps, IWebDriver driver, Result result) {
+            GenericSteps gensteps = new GenericSteps(driver, result);
+            steps = steps.OrderBy(s => s.stepOrder).ToList();
+            foreach (Step step in steps) {
                 try {
                     gensteps.Call(step);
                     gensteps.Wait(0.5);

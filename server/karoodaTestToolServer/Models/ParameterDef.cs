@@ -39,6 +39,14 @@ namespace karoodaTestToolServer.Models {
         public object ToObjectWithID() {
             return new { name, type, value, belongsToStep,id };
         }
+
+        public static ParameterDef initialize(string name, ParamType type, string value) {
+            ParameterDef param = new ParameterDef();
+            param.name = name;
+            param.type = type;
+            param.value = value;
+            return param;
+        }
     }
 
     public enum ParamType { text, number, pointer, entity, column }

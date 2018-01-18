@@ -21,7 +21,6 @@ namespace karoodaTestToolServer.Steps {
         }
 
         public void clickSave() {
-            genericSteps.Wait(1);
             genericSteps.Click("#content > div > form > div.Persoonheader > div > div > div.page-toolbar > div > a.btn.btn-fit-height.green.submit-Persoon-form");
         }
 
